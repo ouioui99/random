@@ -1,4 +1,4 @@
-package com.random.random.restservice;
+package com.random.restservice;
 
 public class SignupRestService {
     private String name;
