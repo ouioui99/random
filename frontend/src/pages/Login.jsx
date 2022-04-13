@@ -6,23 +6,17 @@ export const Login = () => {
 
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-
-    const [login, setLogin] = useState({
-        name: name,
-        password: password,
-    })
     
     const handleSubmit = (e) => {
-        setLogin({
+        postLogin({
             name: name,
             password: password,
-        })
-        postLogin(login).then((response) => {
+        }).then((response) => {
             if(response.status === 200) {
                 setIsLoggedIn(true);
             }
         });
-        e.preventDefault();
+        
     }
 
     const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
@@ -32,14 +26,13 @@ export const Login = () => {
             <h1>Login</h1>
             <form onSubmit={(e) => handleSubmit(e)} action="test">
                 <ul>
-                    <li><input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)}></input></li>
-                    <li><input type="text" name="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></li>
+                    <li><input type="text" name="name" onChange={(e) => setName(e.target.value)}></input></li>
+                    <li><input type="text" name="password" onChange={(e) => setPassword(e.target.value)}></input></li>
                     <li><input type="submit" value="Submit"></input></li>
                 </ul>
             </form>
-            <h3>{name}</h3>
-            <h3>name:{login.name}</h3>
-            <h3>password:{login.password}</h3>
+            <h3>name:{name}</h3>
+            <h3>password:{password}</h3>
             <h3>{isLoggedIn ? "LoggedIn" : "not"}</h3>
             
         </>

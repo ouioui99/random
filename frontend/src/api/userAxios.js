@@ -2,13 +2,10 @@ import axios from "axios";
 import {loginUrl, singupUrl} from "./urls/urls";
 
 
-export const postSignup = (name,password) => {
-    return axios.post(singupUrl, {
-        name: name,
-        password: password
-    })
+export const postSignup = (params) => {
+    return axios.post(singupUrl, params)
     .then((response) => {
-        console.log(response);
+        return response;
     })
 }
 

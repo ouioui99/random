@@ -1,4 +1,4 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState }from 'react';
 import {postSignup} from '../api/userAxios';
 
 export const Signup = () => {
@@ -9,11 +9,13 @@ export const Signup = () => {
 
     const handleSubmit = (e) => {
         if (password === passwordConf) {
-            postSignup(name,password);
+            postSignup({
+                name: name,
+                password: password
+            });
         } else {
             alert("NG");
         }
-        
         e.preventDefault();
     }
 

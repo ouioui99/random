@@ -13,11 +13,13 @@ import com.random.service.SignupService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 @Service
 public class UserController {
@@ -38,6 +40,7 @@ public class UserController {
     
     @PostMapping("/login")
     public LoginRestService login(@RequestBody LoginForm body) {
+        System.out.print(body);
         LoginInfo loginInfo = new LoginInfo();
         BeanUtils.copyProperties(body, loginInfo);
         LoginUserDbInfo loginUserDbInfo = loginService.login(loginInfo);
