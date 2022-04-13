@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect }from 'react';
 import {postSignup} from '../api/userAxios';
 
 export const Signup = () => {
@@ -6,20 +6,10 @@ export const Signup = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConf, setPasswordConf] = useState("");
-    const [signup, setSignup] = useState({
-        name: name,
-        password: password,
-    })
 
     const handleSubmit = (e) => {
         if (password === passwordConf) {
-            setSignup({
-                name: name,
-                password: password,
-            })
-            postSignup(signup).then((data) => {
-                console.log(data);
-            })
+            postSignup(name,password);
         } else {
             alert("NG");
         }
@@ -39,7 +29,6 @@ export const Signup = () => {
                 </ul>
             </form>
             <h3>name:{name}</h3>
-            <h3>param name:{signup.name}</h3>
             
         </>
     )
