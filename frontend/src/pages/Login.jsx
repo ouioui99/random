@@ -1,8 +1,15 @@
-import React,{useState,useContext} from 'react';
+import React,{ useState,useContext } from 'react';
 import { UserContext } from '../providers/UserProvider';
 import {postLogin} from '../api/userAxios'
+import { useNavigate } from 'react-router-dom';
+
+import { CheckLoggedIn } from '../CheckLogin';
 
 export const Login = () => {
+
+    const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -13,18 +20,21 @@ export const Login = () => {
             password: password,
         }).then((response) => {
             if(response.status === 200) {
-                setIsLoggedIn(true);
+                navigate('/');
+                sessionStorage.setItem("session", "sessionTestだよ");
+                setIsLoggedIn(CheckLoggedIn());
             }
         });
         
+        e.preventDefault();
     }
 
-    const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
+    
     console.log(isLoggedIn);
     return (
         <>
             <h1>Login</h1>
-            <form onSubmit={(e) => handleSubmit(e)} action="test">
+            <form onSubmit={(e) => handleSubmit(e)}>
                 <ul>
                     <li><input type="text" name="name" onChange={(e) => setName(e.target.value)}></input></li>
                     <li><input type="text" name="password" onChange={(e) => setPassword(e.target.value)}></input></li>
