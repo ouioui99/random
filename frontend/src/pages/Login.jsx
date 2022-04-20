@@ -21,7 +21,11 @@ export const Login = () => {
         }).then((response) => {
             if(response.status === 200) {
                 navigate('/');
+<<<<<<< HEAD
                 sessionStorage.setItem("session", "sessionID");
+=======
+                sessionStorage.setItem("session", "sessionTestだよ");
+>>>>>>> 62c2932441427e1a0b64f18469c7e2a40256213d
                 setIsLoggedIn(CheckLoggedIn());
             }
         });
