@@ -56,4 +56,39 @@ public class ApiController {
         return data;
     }
 
+    @GetMapping(value = "hot/tokyo", produces = MediaType.APPLICATION_JSON_VALUE)
+    private JsonNode callHot() throws Exception {
+
+        RestTemplate rest = new RestTemplate();
+        ObjectMapper mapper = new ObjectMapper();
+
+        final String endpointHot = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/";
+        final String accessKeyHot = "438ddeef912066d9";
+        final String lat = "35.680207";
+        final String lng = "139.7699";
+        final String range = "2";
+
+        final String urlHot = endpointHot + "?key=" + accessKeyHot + "&lat=" + lat + "&lng=" + lng + "&range=" + range
+                + "&count=50" + "&format=json";
+
+        ResponseEntity<String> responseHot = rest.getForEntity(urlHot, String.class);
+
+        String jsonHot = responseHot.getBody();
+
+        JsonNode root = mapper.readTree(jsonHot);
+
+        Map<String, String> shopNameAndAddressMap = new HashMap<String, String>();
+
+        JsonNode shopList = root.get("results").get("shop");
+        int shopListSize = shopList.size();
+
+        for (int i = 0; i < shopListSize; i++) {
+            shopNameAndAddressMap.put(root.get("results").get("shop").get(i).get("name").asText(),
+                    root.get("results").get("shop").get(i).get("address").asText());
+        }
+
+        System.out.print(shopNameAndAddressMap);
+
+        return root;
+    }
 }
