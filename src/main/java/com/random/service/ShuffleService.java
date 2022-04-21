@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ShuffleService {
-    public ApiRestaurantData doListShuffle(List<ApiRestaurantData> apiRestaurantDataList) {
+    public ApiRestaurantData getRandamRestrauntData(List<ApiRestaurantData> apiRestaurantDataList) {
         int index = new Random().nextInt(apiRestaurantDataList.size());
         ApiRestaurantData result = apiRestaurantDataList.get(index);
         return result;
