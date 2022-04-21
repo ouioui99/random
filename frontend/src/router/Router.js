@@ -6,6 +6,7 @@ import { NotFound } from "../pages/NotFound";
 import { Signup } from "../pages/Signup";
 import { Test } from "../pages/Test";
 import {AuthenticatedRoute} from "../router/AuthentivatedRoute";
+import {Auth} from "../router/Auth"
 import { UserProvider } from "../providers/UserProvider";
 
 
@@ -18,11 +19,16 @@ import { UserProvider } from "../providers/UserProvider";
         <UserProvider>
             <BrowserRouter>
                 <Routes>
-                    <Route path="test" element={<Test />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<Signup />} />
-                    <Route path="*" element={<NotFound />} />
-                    <AuthenticatedRoute />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/test" element={<Test />} />
+                    <Route path="*"
+                        element={
+                            <Auth>
+                                <AuthenticatedRoute />
+                            </Auth>
+                        } 
+                    />
                 </Routes>
             </BrowserRouter>
         </UserProvider>

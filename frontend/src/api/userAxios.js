@@ -10,7 +10,9 @@ export const postSignup = (params) => {
 }
 
 export const postLogin = (params) => {
-    return axios.post(loginUrl, params)
+    return axios.post(loginUrl, params, {
+        withCredentials: true
+      })
     .then((response) => {
         return response;
     })

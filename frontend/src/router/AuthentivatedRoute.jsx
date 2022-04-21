@@ -4,6 +4,7 @@ import {
 
 import {MainHome} from "../pages/MainHome";
 
+
 export const AuthenticatedRoute = () => {
     return (
         <Routes>
