@@ -11,11 +11,15 @@ public class SearchRestaurantService {
     private String name;
     private String address;
     private String url;
+    private String lat;
+    private String lng;
 
     public SearchRestaurantService(ApiRestaurantData resultRestrauntData) {
         this.name = resultRestrauntData.getName();
         this.address = resultRestrauntData.getAddress();
         this.url = resultRestrauntData.getUrl();
+        this.lat = resultRestrauntData.getLat();
+        this.lng = resultRestrauntData.getLng();
     }
 
 }

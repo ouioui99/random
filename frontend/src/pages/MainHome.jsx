@@ -13,6 +13,8 @@ export const MainHome = () => {
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [url, setUrl] = useState("");
+    const [lat, setLat] = useState("");
+    const [lng, setLng] = useState("");
 
     const navigate = useNavigate();
 
@@ -23,6 +25,8 @@ export const MainHome = () => {
             setName(response.data.name);
             setAddress(response.data.address);
             setUrl(response.data.url);
+            setLat(response.data.lat);
+            setLng(response.data.lng);
         })
         // navigate('/test');
     }
@@ -41,6 +45,8 @@ export const MainHome = () => {
             <h3>{name}</h3>
             <h3>{address}</h3>
             <h3>{url}</h3>
+            <h3>{lat}</h3>
+            <h3>{lng}</h3>
             <button onClick={clicked}>test</button>
             <button onClick={(e)=> logout(e)}>Logout</button>
 
