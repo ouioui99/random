@@ -1,18 +1,30 @@
-import React,{ useState,useContext } from 'react';
-import { UserContext } from '../providers/UserProvider';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CheckLoggedIn } from "../CheckLogin";
+import { UserContext } from '../providers/UserProvider';
+import {getRestraunt} from '../api/getRestrauntAxios';
 
 
-import {CheckLoggedIn} from "../CheckLogin";
 
 export const MainHome = () => {
 
     const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
+    const [referenceSite, setReferenceSite] = useState("");
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [url, setUrl] = useState("");
 
     const navigate = useNavigate();
 
-    const clicked = (e) => {
-        navigate('/test');
+    const clicked = () => {
+        getRestraunt({
+            referenceSite:referenceSite,
+        }).then((response) => {
+            setName(response.data.name);
+            setAddress(response.data.address);
+            setUrl(response.data.url);
+        })
+        // navigate('/test');
     }
 
     const logout = () => {
@@ -24,7 +36,12 @@ export const MainHome = () => {
     return (
         <>
             <h1>MainHome</h1>
-            <button onClick={(e)=> clicked(e)}>test</button>
+            <input type="text" name="referenceSite" onChange={(e) => setReferenceSite(e.target.value)}></input><br />
+            <h3>{referenceSite}</h3>
+            <h3>{name}</h3>
+            <h3>{address}</h3>
+            <h3>{url}</h3>
+            <button onClick={clicked}>test</button>
             <button onClick={(e)=> logout(e)}>Logout</button>
 
         </>
