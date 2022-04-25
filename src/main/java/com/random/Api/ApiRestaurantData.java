@@ -11,5 +11,6 @@ public class ApiRestaurantData {
     private String url;
     private String lat;
     private String lng;
-
+    private String catchPhrase;
+    private String genre;
 }

@@ -28,7 +28,8 @@ public class ApiController {
         ShuffleService shuffleService = new ShuffleService();
 
         Map<String, String> LatitudeAndLogtitude = geocodeService.getLatitudeAndLogtitude(body.getReferenceSite());
-        List<ApiRestaurantData> nearRestaurantsList = restaurantServise.getNearRestaurants(LatitudeAndLogtitude);
+        List<ApiRestaurantData> nearRestaurantsList = restaurantServise.getNearRestaurants(LatitudeAndLogtitude,
+                body.getBugetCode(), body.getGenreCode());
         ApiRestaurantData resultRestrauntData = shuffleService.getRandamRestrauntData(nearRestaurantsList);
         return new SearchRestaurantService(resultRestrauntData);
     }
