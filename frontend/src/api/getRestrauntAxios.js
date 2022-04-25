@@ -7,5 +7,7 @@ export const getRestraunt = (params) => {
     })
     .then((response) => {
         return response;
+    }).catch((response) => {
+        return response;
     })
 }
