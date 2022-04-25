@@ -13,6 +13,8 @@ public class SearchRestaurantService {
     private String url;
     private String lat;
     private String lng;
+    private String catchPhrase;
+    private String genre;
 
     public SearchRestaurantService(ApiRestaurantData resultRestrauntData) {
         this.name = resultRestrauntData.getName();
@@ -20,6 +22,8 @@ public class SearchRestaurantService {
         this.url = resultRestrauntData.getUrl();
         this.lat = resultRestrauntData.getLat();
         this.lng = resultRestrauntData.getLng();
+        this.catchPhrase = resultRestrauntData.getCatchPhrase();
+        this.genre = resultRestrauntData.getGenre();
     }
 
 }
