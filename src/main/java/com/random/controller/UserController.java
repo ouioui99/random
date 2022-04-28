@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins="http://localhost:3000",allowCredentials="true")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @Service
 public class UserController {
@@ -34,10 +34,9 @@ public class UserController {
         SignupInfo signupInfo = new SignupInfo();
         BeanUtils.copyProperties(body, signupInfo);
         signupService.signup(signupInfo);
-        return new SignupRestService(body.getId(),body.getName());
+        return new SignupRestService(body.getId(), body.getName());
     }
-    
-    
+
     @PostMapping("/login")
     public LoginRestService login(@RequestBody LoginForm body) {
         System.out.print(body);

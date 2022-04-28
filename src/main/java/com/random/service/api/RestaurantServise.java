@@ -19,7 +19,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 @Service
 public class RestaurantServise {
 
-    public List<ApiRestaurantData> getNearRestaurants(Map<String, String> geocodeMap)
+    public List<ApiRestaurantData> getNearRestaurants(Map<String, String> geocodeMap, String bugetCode,
+            String genreCode)
             throws JsonMappingException, JsonProcessingException {
         Dotenv dotenv = Dotenv.load();
         RestTemplate rest = new RestTemplate();
@@ -31,9 +32,13 @@ public class RestaurantServise {
         final String accessKeyHot = dotenv.get("HOTPEPPER_API_KEY");
         final String lat = geocodeMap.get("lat");
         final String lng = geocodeMap.get("lng");
+        final String genre = genreCode;
+        final String buget = bugetCode;
+
+        // TODO:rangeもユーザーの任意の値にしたい
         final String range = "2";
         final String urlHot = URL_FOUNDATION + "?key=" + accessKeyHot + "&lat=" + lat + "&lng=" + lng + "&range="
-                + range
+                + range + "&budget=" + buget + "&genre=" + genre
                 + "&count=50" + "&format=json";
 
         // api叩く
@@ -44,11 +49,16 @@ public class RestaurantServise {
         JsonNode root = mapper.readTree(jsonHot);
 
         // jsonをbeanlistに挿入
-        for (JsonNode test : root.get("results").get("shop")) {
+        for (JsonNode shopDatas : root.get("results").get("shop")) {
+            System.out.println(shopDatas.get("genre").get("catch"));
             ApiRestaurantData apiRestaurantData = new ApiRestaurantData();
-            apiRestaurantData.setName(test.get("name").asText());
-            apiRestaurantData.setAddress(test.get("address").asText());
-            apiRestaurantData.setUrl(test.get("urls").get("pc").asText());
+            apiRestaurantData.setName(shopDatas.get("name").asText());
+            apiRestaurantData.setAddress(shopDatas.get("address").asText());
+            apiRestaurantData.setUrl(shopDatas.get("urls").get("pc").asText());
+            apiRestaurantData.setLat(shopDatas.get("lat").asText());
+            apiRestaurantData.setLng(shopDatas.get("lng").asText());
+            apiRestaurantData.setCatchPhrase(shopDatas.get("genre").get("catch").asText());
+            apiRestaurantData.setGenre(shopDatas.get("genre").get("name").asText());
 
             apiRestaurantDataList.add(apiRestaurantData);
         }
