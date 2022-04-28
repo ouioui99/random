@@ -7,7 +7,6 @@ export const Auth = ({ children }) => {
     const {isLoggedIn} = useContext(UserContext);
     const location = useLocation();
 
-    console.log(children);
     return (
         isLoggedIn ? <>{children}</> : <Navigate to={{
         pathname: '/login',

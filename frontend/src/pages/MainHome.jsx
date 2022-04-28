@@ -1,12 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckLoggedIn } from "../CheckLogin";
 import { UserContext } from '../providers/UserProvider';
 import {getRestraunt} from '../api/getRestrauntAxios';
-
+import {MyComponent} from '../components/GoogleMap';
 
 
 export const MainHome = () => {
+
+    useEffect(() => {
+        setIsLoggedIn(CheckLoggedIn());
+    },[])
 
     const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
     const [referenceSite, setReferenceSite] = useState("");
@@ -16,12 +20,14 @@ export const MainHome = () => {
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [url, setUrl] = useState("");
-    const [lat, setLat] = useState("");
-    const [lng, setLng] = useState("");
+    const [lat, setLat] = useState(35.69575);
+    const [lng, setLng] = useState(139.77521);
     const [catchPhrase, setCatchPhrase] = useState("");
     const [genre, setGenre] = useState("");
 
     const navigate = useNavigate();
+
+    const GoogleApiKey = process.env.React_APP_GOOGLE_MAP_API;
 
     const clicked = () => {
         getRestraunt({
@@ -34,8 +40,8 @@ export const MainHome = () => {
                 setName(response.data.name);
                 setAddress(response.data.address);
                 setUrl(response.data.url);
-                setLat(response.data.lat);
-                setLng(response.data.lng);
+                setLat(parseFloat(response.data.lat));
+                setLng(parseFloat(response.data.lng));
                 setCatchPhrase(response.data.catchPhrase);
                 setGenre(response.data.genre);
             } else {
@@ -97,6 +103,7 @@ export const MainHome = () => {
             <h3>{lng}</h3>
             <h3>{catchPhrase}</h3>
             <h3>{genre}</h3>
+            <MyComponent lat={lat} lng={lng}/>
             <button onClick={(e)=> logout(e)}>Logout</button>
 
         </>
