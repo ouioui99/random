@@ -5,6 +5,9 @@ import { UserContext } from '../providers/UserProvider';
 import {getRestraunt} from '../api/getRestrauntAxios';
 import {MyComponent} from '../components/GoogleMap';
 
+import Header from "../components/materialUi/Header";
+import {GloabalButton} from '../components/materialUi/Button';
+
 
 export const MainHome = () => {
 
@@ -51,14 +54,11 @@ export const MainHome = () => {
         // navigate('/test');
     }
 
-    const logout = () => {
-        sessionStorage.removeItem("session");
-        setIsLoggedIn(CheckLoggedIn());
-        navigate('/test');
-    }
+
 
     return (
         <>
+            <Header></Header>
             <h1>MainHome</h1>
             <input type="text" name="referenceSite" onChange={(e) => setReferenceSite(e.target.value)}></input><br />
             <select name="genre" onChange={(e) => setGenreCode(e.target.value)}>
@@ -104,7 +104,7 @@ export const MainHome = () => {
             <h3>{catchPhrase}</h3>
             <h3>{genre}</h3>
             <MyComponent lat={lat} lng={lng}/>
-            <button onClick={(e)=> logout(e)}>Logout</button>
+
 
         </>
 

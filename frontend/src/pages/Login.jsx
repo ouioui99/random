@@ -3,6 +3,8 @@ import { UserContext, LoadContext} from '../providers/UserProvider';
 import {postLogin} from '../api/userAxios'
 import { useNavigate } from 'react-router-dom';
 
+import Header from "../components/materialUi/Header";
+
 import { CheckLoggedIn } from '../CheckLogin';
 
 export const Login = () => {
@@ -30,16 +32,9 @@ export const Login = () => {
         e.preventDefault();
     }
 
-    const logout = () => {
-        sessionStorage.removeItem("session");
-        setIsLoggedIn(CheckLoggedIn());
-        navigate('/test');
-    }
-
-    
-    console.log(isLoggedIn);
     return (
         <>
+            <Header></Header>
             <h1>Login</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <ul>
@@ -48,7 +43,6 @@ export const Login = () => {
                     <li><input type="submit" value="Submit"></input></li>
                 </ul>
             </form>
-            <button onClick={(e)=> logout(e)}>Logout</button>
             <h3>name:{name}</h3>
             <h3>password:{password}</h3>
             <h3>{isLoggedIn ? "LoggedIn" : "not"}</h3>

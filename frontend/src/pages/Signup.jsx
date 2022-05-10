@@ -3,6 +3,8 @@ import { UserContext } from '../providers/UserProvider';
 import {postSignup} from '../api/userAxios';
 import { useNavigate } from 'react-router-dom';
 
+import Header from "../components/materialUi/Header";
+
 export const Signup = () => {
 
     const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
@@ -33,6 +35,7 @@ export const Signup = () => {
 
     return (
         <>
+            <Header></Header>
             <h1>Signup</h1>
             <form  onSubmit={(e) => handleSubmit(e)}>
                 <ul>
