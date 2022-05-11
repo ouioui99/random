@@ -12,6 +12,7 @@ export const Test = () => {
             <li><Link to="/">MainHome</Link>(ログイン時のみ)</li>
             <li><Link to="/login">login</Link></li>
             <li><Link to="/signup">signup</Link></li>
+            <li><Link to="/signinside">test</Link></li>
           </ul>
           <h3>{isLoggedIn ? "LoggedIn" : "not"}</h3>
         </>
