@@ -19,6 +19,8 @@ import {MyComponent} from '../components/GoogleMap';
 import {GenreCodeSelector} from '../components/GenreCodeSelector';
 import {BudgetCodeSelector} from '../components/BudgetCodeSelector';
 
+import {getGeocode} from "../api/getGeocode";
+
 
 import Header from "../components/materialUi/Header";
 
@@ -36,6 +38,9 @@ export const MainHome = () => {
     const [genreCode, setGenreCode] = useState("");
     const [bugetCode, setBugetCode] = useState("");
 
+    const [referenceSiteLat, setReferenceSiteLat] = useState("");
+    const [referenceSiteLng, setReferenceSitelng] = useState("");
+
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [url, setUrl] = useState("");
@@ -48,7 +53,8 @@ export const MainHome = () => {
     const clicked = (e) => {
         e.preventDefault();
         getRestraunt({
-            referenceSite:referenceSite,
+            referenceSiteLat:referenceSiteLat,
+            referenceSiteLng:referenceSiteLng,
             genreCode:genreCode,
             bugetCode:bugetCode,
         }).then((response) => {
@@ -65,6 +71,17 @@ export const MainHome = () => {
                 alert("検索結果が見つかりませんでした");
             }
         })
+    }
+
+    const handleOnblur = (e) => {
+        const address = e.target.value;
+        getGeocode({
+            address:address,
+        }).then((res)=> {
+            console.log(res);
+            setReferenceSiteLat(res.data.lat);
+            setReferenceSitelng(res.data.lng);
+        });
     }
 
 
@@ -133,7 +150,8 @@ export const MainHome = () => {
                                     >
                                     検索条件変更
                                     </Button>
-                                </>:
+                                </>
+                                :
                                 <>
                                     <TextField
                                     margin="normal"
@@ -145,6 +163,7 @@ export const MainHome = () => {
                                     autoComplete="email"
                                     autoFocus
                                     onChange={(e)=> setReferenceSite(e.target.value)}
+                                    onBlur={(e)=> handleOnblur(e)}
                                     />
                                     <GenreCodeSelector setGenreCode={setGenreCode} />
                                     <BudgetCodeSelector setBugetCode={setBugetCode} />
@@ -158,6 +177,8 @@ export const MainHome = () => {
                                     >
                                     検索
                                     </Button>
+                                    <h3>{referenceSiteLat}</h3>
+                                    <h3>{referenceSiteLng}</h3>
                                 </>
                                 }
 
