@@ -14,6 +14,7 @@ export const GenreCodeSelector = (props) => {
                 id="genreSelector"
                 label="genreSelector"
                 onChange={(e) => props.setGenreCode(e.target.value)}
+                defaultValue =""
             >
                 <MenuItem value="">指定なし</MenuItem>
                 <MenuItem value="G001">居酒屋</MenuItem>
