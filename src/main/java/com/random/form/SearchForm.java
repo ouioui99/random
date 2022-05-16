@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class SearchForm {
-    private String referenceSite;
+    private String referenceSiteLat;
+    private String referenceSiteLng;
     private String genreCode;
     private String bugetCode;
 }

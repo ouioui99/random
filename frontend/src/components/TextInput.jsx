@@ -1,0 +1,39 @@
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+
+import { getGeocode } from "../api/getGeocode";
+
+export const TextInput = (props) => {
+  const [referenceSite, setReferenceSiteInput] = useState("");
+
+  const handleOnblur = (e) => {
+    const address = e.target.value;
+    //空文字判定
+    if (address) {
+      getGeocode({
+        address: address,
+      }).then((res) => {
+        console.log(res);
+        props.setReferenceSitePosition({
+          lat: res.data.lat,
+          lng: res.data.lng,
+        });
+      });
+    }
+  };
+
+  return (
+    <TextField
+      margin="normal"
+      required
+      fullWidth
+      id="referenceSite"
+      label="基準地"
+      name="referenceSite"
+      autoComplete="email"
+      autoFocus
+      onChange={(e) => setReferenceSiteInput(e.target.value)}
+      onBlur={(e) => handleOnblur(e)}
+    />
+  );
+};

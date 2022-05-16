@@ -19,7 +19,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 @Service
 public class RestaurantServise {
 
-    public List<ApiRestaurantData> getNearRestaurants(Map<String, String> geocodeMap, String bugetCode,
+    public List<ApiRestaurantData> getNearRestaurants(String referenceSiteLat, String referenceSiteLng,
+            String bugetCode,
             String genreCode)
             throws JsonMappingException, JsonProcessingException {
         Dotenv dotenv = Dotenv.load();
@@ -30,8 +31,8 @@ public class RestaurantServise {
 
         final String URL_FOUNDATION = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/";
         final String accessKeyHot = dotenv.get("HOTPEPPER_API_KEY");
-        final String lat = geocodeMap.get("lat");
-        final String lng = geocodeMap.get("lng");
+        final String lat = referenceSiteLat;
+        final String lng = referenceSiteLng;
         final String genre = genreCode;
         final String buget = bugetCode;
 

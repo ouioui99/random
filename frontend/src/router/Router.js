@@ -5,6 +5,7 @@ import { Login } from "../pages/Login";
 import { NotFound } from "../pages/NotFound";
 import { Signup } from "../pages/Signup";
 import { Test } from "../pages/Test";
+import  SignInSide  from "../pages/TestLoggedIn";
 import {AuthenticatedRoute} from "../router/AuthentivatedRoute";
 import {Auth} from "../router/Auth"
 import { UserProvider } from "../providers/UserProvider";
@@ -15,6 +16,7 @@ import { UserProvider } from "../providers/UserProvider";
 
 
   function Router() {
+      
     return(
         <UserProvider>
             <BrowserRouter>
@@ -22,6 +24,7 @@ import { UserProvider } from "../providers/UserProvider";
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/test" element={<Test />} />
+                <Route path="/signinside" element={<SignInSide />} />
                     <Route path="*"
                         element={
                             <Auth>

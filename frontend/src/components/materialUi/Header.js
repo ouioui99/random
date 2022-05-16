@@ -25,7 +25,7 @@ export default function Header() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
+                    {/* <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
@@ -33,8 +33,8 @@ export default function Header() {
                         sx={{ mr: 2 }}
                     >
                         <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    </IconButton> */}
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={()=>navigate('/test')}>
                         Random
                     </Typography>
                     {isLoggedIn ? 
