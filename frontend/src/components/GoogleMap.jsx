@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -11,39 +11,41 @@ const center = {
   lng: 139.77521,
 };
 
-const positionAkiba = {
-    lat: 35.69575,
-    lng: 139.77521,
-  };
-
-
-  const markerLabelAkiba = {
-    color: "white",
-    fontFamily: "sans-serif",
-    fontSize: "15px",
-    fontWeight: "100",
-    text: "5",
-  };
-
-
 const GoogleMapsApiKey = process.env.React_APP_GOOGLE_MAP_API;
 
-export const MyComponent = (props) => {
+export const GoogleMapComponent = (props) => {
+  const referenceSiteLat = Number(props.referenceSiteLat);
+  const referenceSiteLng = Number(props.referenceSiteLng);
+  const resultLat = Number(props.resultLat);
+  const resultlng = Number(props.resultlng);
 
-    const [position, setPosition] = useState({lat:props.lat,lng:props.lng});
+  const [referenceSiteMarkerPositions, setReferenceSiteMarkerPositions] =
+    useState([]);
 
+  const [resultMarkerPositions, setResultMarkerPositions] = useState([]);
 
-    // useEffect(() => {
-    //     /* 第1引数には実行させたい副作用関数を記述*/
-    //     setPosition({lat: props.lat,lng: props.lng})
-    //     console.log('副作用関数が実行されました！')
-    //     },[props]) // 第2引数には副作用関数の実行タイミングを制御する依存データを記述
+  useEffect(() => {
+    // setReferenceSiteMarkerPositions([
+    //   ...referenceSiteMarkerPositions,
+    //   {
+    //     lat: referenceSiteLat,
+    //     lng: referenceSiteLng,
+    //   },
+    // ]);
+    // referenceSiteMarkerPositions.shift();
+    // console.log(referenceSiteMarkerPositions);
+    console.log("ok");
+  }, [props]);
 
-    return (
-    <LoadScript googleMapsApiKey={GoogleMapsApiKey}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={7}>
-        {/* <Marker position={positionAkiba} label={markerLabelAkiba} /> */}
-      </GoogleMap>
-    </LoadScript>
-    );
+  return (
+    <>
+      <LoadScript googleMapsApiKey={GoogleMapsApiKey}>
+        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+          {referenceSiteMarkerPositions.map((marker) => {
+            return <Marker position={marker} />;
+          })}
+        </GoogleMap>
+      </LoadScript>
+    </>
+  );
 };
