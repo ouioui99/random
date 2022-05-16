@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -13,12 +12,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CheckLoggedIn } from "../CheckLogin";
 import { UserContext } from "../providers/UserProvider";
 import { getRestraunt } from "../api/getRestrauntAxios";
+
 import { GoogleMapComponent } from "../components/GoogleMap";
 import { GenreCodeSelector } from "../components/GenreCodeSelector";
 import { BudgetCodeSelector } from "../components/BudgetCodeSelector";
-
-import { getGeocode } from "../api/getGeocode";
-
+import { TextInput } from "../components/TextInput";
 import Header from "../components/materialUi/Header";
 
 export const MainHome = () => {
@@ -33,8 +31,7 @@ export const MainHome = () => {
   const [genreCode, setGenreCode] = useState("");
   const [bugetCode, setBugetCode] = useState("");
 
-  const [referenceSiteLat, setReferenceSiteLat] = useState("");
-  const [referenceSiteLng, setReferenceSitelng] = useState("");
+  const [referenceSitePosition, setReferenceSitePosition] = useState({});
 
   const [resultRestrauntName, setResultRestrauntName] = useState("");
   const [resultAddress, setResultAddress] = useState("");
@@ -48,8 +45,8 @@ export const MainHome = () => {
   const clicked = (e) => {
     e.preventDefault();
     getRestraunt({
-      referenceSiteLat: referenceSiteLat,
-      referenceSiteLng: referenceSiteLng,
+      referenceSiteLat: referenceSitePosition.lat,
+      referenceSiteLng: referenceSitePosition.lng,
       genreCode: genreCode,
       bugetCode: bugetCode,
     }).then((response) => {
@@ -63,23 +60,10 @@ export const MainHome = () => {
         setResultCatchPhrase(response.data.catchPhrase);
         setResultGenre(response.data.genre);
       } else {
+        console.error(response);
         alert("検索結果が見つかりませんでした");
       }
     });
-  };
-
-  const handleOnblur = (e) => {
-    const address = e.target.value;
-    //空文字判定
-    if (address) {
-      getGeocode({
-        address: address,
-      }).then((res) => {
-        console.log(res);
-        setReferenceSiteLat(res.data.lat);
-        setReferenceSitelng(res.data.lng);
-      });
-    }
   };
 
   return (
@@ -103,8 +87,8 @@ export const MainHome = () => {
             }}
           >
             <GoogleMapComponent
-              referenceSiteLat={referenceSiteLat}
-              referenceSiteLng={referenceSiteLng}
+              referenceSiteLat={referenceSitePosition.lat}
+              referenceSiteLng={referenceSitePosition.lng}
               resultLat={resultLat}
               resultlng={resultlng}
             />
@@ -165,17 +149,9 @@ export const MainHome = () => {
                   </>
                 ) : (
                   <>
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="referenceSite"
-                      label="基準地"
-                      name="referenceSite"
-                      autoComplete="email"
-                      autoFocus
-                      onChange={(e) => setReferenceSiteInput(e.target.value)}
-                      onBlur={(e) => handleOnblur(e)}
+                    <TextInput
+                      referenceSitePosition={referenceSitePosition}
+                      setReferenceSitePosition={setReferenceSitePosition}
                     />
                     <GenreCodeSelector setGenreCode={setGenreCode} />
                     <BudgetCodeSelector setBugetCode={setBugetCode} />
@@ -185,12 +161,13 @@ export const MainHome = () => {
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                       onClick={(e) => clicked(e)}
-                      disabled={!referenceSiteLat || !referenceSiteLng}
+                      disabled={
+                        !referenceSitePosition.lat && !referenceSitePosition.lng
+                      }
                     >
                       検索
                     </Button>
-                    <h3>{referenceSiteLat}</h3>
-                    <h3>{referenceSiteLng}</h3>
+                    <h3>{referenceSitePosition.lat}</h3>
                   </>
                 )}
               </Box>
