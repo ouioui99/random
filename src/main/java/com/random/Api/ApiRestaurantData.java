@@ -13,4 +13,5 @@ public class ApiRestaurantData {
     private String lng;
     private String catchPhrase;
     private String genre;
+    private Integer resultCount;
 }
