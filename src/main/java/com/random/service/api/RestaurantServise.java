@@ -40,7 +40,7 @@ public class RestaurantServise {
         final String range = "2";
         final String urlHot = URL_FOUNDATION + "?key=" + accessKeyHot + "&lat=" + lat + "&lng=" + lng + "&range="
                 + range + "&budget=" + buget + "&genre=" + genre
-                + "&count=50" + "&format=json";
+                + "&count=100" + "&format=json";
 
         // api叩く
         ResponseEntity<String> responseHot = rest.getForEntity(urlHot, String.class);
