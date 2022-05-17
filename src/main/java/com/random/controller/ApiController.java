@@ -43,7 +43,7 @@ public class ApiController {
         // Map<String, String> LatitudeAndLogtitude =
         // geocodeService.getLatitudeAndLogtitude(body.getReferenceSite());
         List<ApiRestaurantData> nearRestaurantsList = restaurantServise.getNearRestaurants(body.getReferenceSiteLat(),
-                body.getReferenceSiteLng(), body.getBugetCode(), body.getGenreCode());
+                body.getReferenceSiteLng(), body.getBugetCode(), body.getGenreCode(), body.getRange());
         ApiRestaurantData resultRestrauntData = shuffleService.getRandamRestrauntData(nearRestaurantsList);
         resultRestrauntData.setResultCount(nearRestaurantsList.size());
         return new SearchRestaurantService(resultRestrauntData);

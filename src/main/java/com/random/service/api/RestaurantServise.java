@@ -21,7 +21,8 @@ public class RestaurantServise {
 
     public List<ApiRestaurantData> getNearRestaurants(String referenceSiteLat, String referenceSiteLng,
             String bugetCode,
-            String genreCode)
+            String genreCode,
+            Integer range)
             throws JsonMappingException, JsonProcessingException {
         Dotenv dotenv = Dotenv.load();
         RestTemplate rest = new RestTemplate();
@@ -36,8 +37,7 @@ public class RestaurantServise {
         final String genre = genreCode;
         final String buget = bugetCode;
 
-        // TODO:rangeもユーザーの任意の値にしたい
-        final String range = "2";
+        
         final String urlHot = URL_FOUNDATION + "?key=" + accessKeyHot + "&lat=" + lat + "&lng=" + lng + "&range="
                 + range + "&budget=" + buget + "&genre=" + genre
                 + "&count=100" + "&format=json";
