@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -6,44 +6,88 @@ const containerStyle = {
   height: "100%",
 };
 
-const center = {
-  lat: 35.69575,
-  lng: 139.77521,
-};
-
-const positionAkiba = {
-    lat: 35.69575,
-    lng: 139.77521,
-  };
-
-
-  const markerLabelAkiba = {
-    color: "white",
-    fontFamily: "sans-serif",
-    fontSize: "15px",
-    fontWeight: "100",
-    text: "5",
-  };
-
-
 const GoogleMapsApiKey = process.env.React_APP_GOOGLE_MAP_API;
 
-export const MyComponent = (props) => {
+export const GoogleMapComponent = (props) => {
+  const referenceSiteLat = Number(props.referenceSitePosition.lat);
+  const referenceSiteLng = Number(props.referenceSitePosition.lng);
+  const resultLat = Number(props.resultSitePosition.lat);
+  const resultlng = Number(props.resultSitePosition.lng);
 
-    const [position, setPosition] = useState({lat:props.lat,lng:props.lng});
+  //地図の中心state
+  const [centerPosition, setCenterPosition] = useState({
+    lat: 35.69575,
+    lng: 139.77521,
+  });
+  //検索基準地座標
+  const [referenceSiteMarkerPositions, setReferenceSiteMarkerPositions] =
+    useState([]);
+  //検索結果座標
+  const [resultSitePositions, setResultSitePositions] = useState([]);
 
+  //地図拡大state
+  const [zoom, setZoom] = useState(5);
 
-    // useEffect(() => {
-    //     /* 第1引数には実行させたい副作用関数を記述*/
-    //     setPosition({lat: props.lat,lng: props.lng})
-    //     console.log('副作用関数が実行されました！')
-    //     },[props]) // 第2引数には副作用関数の実行タイミングを制御する依存データを記述
+  useEffect(() => {
+    setZoom(5);
+    //検索する基準地の座標
+    setReferenceSiteMarkerPositions([
+      ...referenceSiteMarkerPositions,
+      { lat: referenceSiteLat, lng: referenceSiteLng },
+    ]);
 
-    return (
-    <LoadScript googleMapsApiKey={GoogleMapsApiKey}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={7}>
-        {/* <Marker position={positionAkiba} label={markerLabelAkiba} /> */}
-      </GoogleMap>
-    </LoadScript>
-    );
+    //ランダムで表示された結果の座標
+    setResultSitePositions([
+      ...resultSitePositions,
+      { lat: resultLat, lng: resultlng },
+    ]);
+    //visibleオプションで制御する下記方法だとなぜか3つ以降のmarkerが表示されなくなってしまう、、
+    // if (referenceSiteMarkerPositions.length > 1) {
+    //   setVisible(
+    //     (referenceSiteMarkerPositions[
+    //       referenceSiteMarkerPositions.length - 1
+    //     ].visible = false)
+    //   );
+    // }
+    // console.log(referenceSiteMarkerPositions);
+
+    //初回以降はmapのセンターをmarkerの部分に変更する
+    if (props.rendering) {
+      setCenterPosition({ lat: referenceSiteLat, lng: referenceSiteLng });
+      setZoom(16);
+    }
+    //初回レンダリングにtrueへ
+    props.setRendering(true);
+  }, [props.referenceSitePosition, props.resultSitePosition]);
+
+  return (
+    <>
+      <LoadScript googleMapsApiKey={GoogleMapsApiKey}>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={centerPosition}
+          zoom={zoom}
+        >
+          {/* 検索基準地のmarker */}
+          {/* referenceSiteMarkerPositionsの一番新しいものだけをMarkerとして返却する */}
+          {referenceSiteMarkerPositions.map((marker, index) => {
+            return referenceSiteMarkerPositions.length == index + 1 ? (
+              <Marker key={index} position={marker} />
+            ) : (
+              <Fragment key={index}></Fragment>
+            );
+          })}
+
+          {/* 検索結果のmarker */}
+          {resultSitePositions.map((marker, index) => {
+            return resultSitePositions.length == index + 1 ? (
+              <Marker key={index} position={marker} />
+            ) : (
+              <Fragment key={index}></Fragment>
+            );
+          })}
+        </GoogleMap>
+      </LoadScript>
+    </>
+  );
 };
