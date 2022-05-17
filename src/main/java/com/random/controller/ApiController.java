@@ -45,6 +45,7 @@ public class ApiController {
         List<ApiRestaurantData> nearRestaurantsList = restaurantServise.getNearRestaurants(body.getReferenceSiteLat(),
                 body.getReferenceSiteLng(), body.getBugetCode(), body.getGenreCode());
         ApiRestaurantData resultRestrauntData = shuffleService.getRandamRestrauntData(nearRestaurantsList);
+        resultRestrauntData.setResultCount(nearRestaurantsList.size());
         return new SearchRestaurantService(resultRestrauntData);
     }
 }

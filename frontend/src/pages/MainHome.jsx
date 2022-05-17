@@ -38,6 +38,8 @@ export const MainHome = () => {
   const [resultUrl, setResultUrl] = useState("");
   const [resultCatchPhrase, setResultCatchPhrase] = useState("");
   const [resultGenre, setResultGenre] = useState("");
+  const [resultCount, setResultCount] = useState(0);
+
   const [searched, setSearched] = useState(false);
 
   //初回レンダリング検知state
@@ -77,6 +79,7 @@ export const MainHome = () => {
         });
         setResultCatchPhrase(response.data.catchPhrase);
         setResultGenre(response.data.genre);
+        setResultCount(response.data.resultCount);
       } else {
         resetState(e);
         alert("検索結果が見つかりませんでした");
@@ -142,6 +145,7 @@ export const MainHome = () => {
                     </a>
                     <h3>{resultCatchPhrase}</h3>
                     <h3>{resultGenre}</h3>
+                    <h3>該当件数/{resultCount}件</h3>
                     {/*TODO: size固定したい */}
                     <Button
                       type="submit"
