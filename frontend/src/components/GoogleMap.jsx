@@ -11,33 +11,32 @@ const center = {
   lng: 139.77521,
 };
 
-const positionAkiba = {
-  lat: 35.69731,
-  lng: 139.7747,
-};
-
-const markerTest = { lat: 35.681236, lng: 139.767125 };
-
 const GoogleMapsApiKey = process.env.React_APP_GOOGLE_MAP_API;
 
 export const GoogleMapComponent = (props) => {
   const referenceSiteLat = Number(props.referenceSitePosition.lat);
   const referenceSiteLng = Number(props.referenceSitePosition.lng);
-  const resultLat = Number(props.resultLat);
-  const resultlng = Number(props.resultlng);
+  const resultLat = Number(props.resultSitePosition.lat);
+  const resultlng = Number(props.resultSitePosition.lng);
 
   const [referenceSiteMarkerPositions, setReferenceSiteMarkerPositions] =
     useState([]);
 
-  const [visible, setVisible] = useState(true);
+  const [resultSitePositions, setResultSitePositions] = useState([]);
 
   useEffect(() => {
-    console.log(referenceSiteMarkerPositions.length);
+    //検索する基準地の座標
     setReferenceSiteMarkerPositions([
       ...referenceSiteMarkerPositions,
-      { lat: referenceSiteLat, lng: referenceSiteLng, visible: visible },
+      { lat: referenceSiteLat, lng: referenceSiteLng },
     ]);
-    //下記方法だとなぜか3つ以降のmarkerが表示されなくなってしまう、、
+
+    //ランダムで表示された結果の座標
+    setResultSitePositions([
+      ...resultSitePositions,
+      { lat: resultLat, lng: resultlng },
+    ]);
+    //visibleオプションで制御する下記方法だとなぜか3つ以降のmarkerが表示されなくなってしまう、、
     // if (referenceSiteMarkerPositions.length > 1) {
     //   setVisible(
     //     (referenceSiteMarkerPositions[
@@ -55,7 +54,14 @@ export const GoogleMapComponent = (props) => {
           {referenceSiteMarkerPositions.map((marker, index) => {
             //referenceSiteMarkerPositionsの一番新しいものだけをMarkerとして返却する
             return referenceSiteMarkerPositions.length == index + 1 ? (
-              <Marker key={index} position={marker} visible={marker.visible} />
+              <Marker key={index} position={marker} />
+            ) : (
+              <Fragment key={index}></Fragment>
+            );
+          })}
+          {resultSitePositions.map((marker, index) => {
+            return resultSitePositions.length == index + 1 ? (
+              <Marker key={index} position={marker} />
             ) : (
               <Fragment key={index}></Fragment>
             );

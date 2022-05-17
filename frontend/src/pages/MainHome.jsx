@@ -32,12 +32,11 @@ export const MainHome = () => {
   const [bugetCode, setBugetCode] = useState("");
 
   const [referenceSitePosition, setReferenceSitePosition] = useState({});
+  const [resultSitePosition, setResultSitePosition] = useState({});
 
   const [resultRestrauntName, setResultRestrauntName] = useState("");
   const [resultAddress, setResultAddress] = useState("");
   const [resultUrl, setResultUrl] = useState("");
-  const [resultLat, setResultLat] = useState(35.69575);
-  const [resultlng, setResultLng] = useState(139.77521);
   const [resultCatchPhrase, setResultCatchPhrase] = useState("");
   const [resultGenre, setResultGenre] = useState("");
   const [searched, setSearched] = useState(false);
@@ -55,8 +54,10 @@ export const MainHome = () => {
         setResultRestrauntName(response.data.name);
         setResultAddress(response.data.address);
         setResultUrl(response.data.url);
-        setResultLat(parseFloat(response.data.lat));
-        setResultLng(parseFloat(response.data.lng));
+        setResultSitePosition({
+          lat: parseFloat(response.data.lat),
+          lng: parseFloat(response.data.lng),
+        });
         setResultCatchPhrase(response.data.catchPhrase);
         setResultGenre(response.data.genre);
       } else {
@@ -88,8 +89,7 @@ export const MainHome = () => {
           >
             <GoogleMapComponent
               referenceSitePosition={referenceSitePosition}
-              resultLat={resultLat}
-              resultlng={resultlng}
+              resultSitePosition={resultSitePosition}
             />
           </Grid>
 
@@ -121,8 +121,6 @@ export const MainHome = () => {
                     <a href={resultUrl}>
                       <h3>{resultRestrauntName}</h3>
                     </a>
-                    <h3>{resultLat}</h3>
-                    <h3>{resultlng}</h3>
                     <h3>{resultCatchPhrase}</h3>
                     <h3>{resultGenre}</h3>
                     {/*TODO: size固定したい */}
