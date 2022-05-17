@@ -87,8 +87,7 @@ export const MainHome = () => {
             }}
           >
             <GoogleMapComponent
-              referenceSiteLat={referenceSitePosition.lat}
-              referenceSiteLng={referenceSitePosition.lng}
+              referenceSitePosition={referenceSitePosition}
               resultLat={resultLat}
               resultlng={resultlng}
             />
