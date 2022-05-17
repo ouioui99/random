@@ -14,22 +14,22 @@ export const GoogleMapComponent = (props) => {
   const resultLat = Number(props.resultSitePosition.lat);
   const resultlng = Number(props.resultSitePosition.lng);
 
+  //地図の中心state
   const [centerPosition, setCenterPosition] = useState({
     lat: 35.69575,
     lng: 139.77521,
   });
-
+  //検索基準地座標
   const [referenceSiteMarkerPositions, setReferenceSiteMarkerPositions] =
     useState([]);
-
+  //検索結果座標
   const [resultSitePositions, setResultSitePositions] = useState([]);
 
-  const [test, setTest] = useState(false);
+  //地図拡大state
+  const [zoom, setZoom] = useState(5);
 
   useEffect(() => {
-    if (test) {
-      setCenterPosition({ lat: referenceSiteLat, lng: referenceSiteLng });
-    }
+    setZoom(5);
     //検索する基準地の座標
     setReferenceSiteMarkerPositions([
       ...referenceSiteMarkerPositions,
@@ -50,8 +50,15 @@ export const GoogleMapComponent = (props) => {
     //   );
     // }
     // console.log(referenceSiteMarkerPositions);
-    setTest(true);
-  }, [props]);
+
+    //初回以降はmapのセンターをmarkerの部分に変更する
+    if (props.rendering) {
+      setCenterPosition({ lat: referenceSiteLat, lng: referenceSiteLng });
+      setZoom(16);
+    }
+    //初回レンダリングにtrueへ
+    props.setRendering(true);
+  }, [props.referenceSitePosition, props.resultSitePosition]);
 
   return (
     <>
@@ -59,16 +66,19 @@ export const GoogleMapComponent = (props) => {
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={centerPosition}
-          zoom={10}
+          zoom={zoom}
         >
+          {/* 検索基準地のmarker */}
+          {/* referenceSiteMarkerPositionsの一番新しいものだけをMarkerとして返却する */}
           {referenceSiteMarkerPositions.map((marker, index) => {
-            //referenceSiteMarkerPositionsの一番新しいものだけをMarkerとして返却する
             return referenceSiteMarkerPositions.length == index + 1 ? (
               <Marker key={index} position={marker} />
             ) : (
               <Fragment key={index}></Fragment>
             );
           })}
+
+          {/* 検索結果のmarker */}
           {resultSitePositions.map((marker, index) => {
             return resultSitePositions.length == index + 1 ? (
               <Marker key={index} position={marker} />

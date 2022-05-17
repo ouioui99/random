@@ -27,7 +27,6 @@ export const MainHome = () => {
   }, []);
 
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
-  const [referenceSite, setReferenceSiteInput] = useState("");
   const [genreCode, setGenreCode] = useState("");
   const [bugetCode, setBugetCode] = useState("");
 
@@ -40,6 +39,24 @@ export const MainHome = () => {
   const [resultCatchPhrase, setResultCatchPhrase] = useState("");
   const [resultGenre, setResultGenre] = useState("");
   const [searched, setSearched] = useState(false);
+
+  //初回レンダリング検知state
+  const [rendering, setRendering] = useState(false);
+
+  //stateリセット関数
+  const resetState = (e) => {
+    e.preventDefault();
+    setRendering(false);
+    setSearched(false);
+    setGenreCode("");
+    setBugetCode("");
+    setReferenceSitePosition({});
+    setResultSitePosition({});
+    setResultRestrauntName("");
+    setResultAddress("");
+    setResultCatchPhrase("");
+    setResultGenre("");
+  };
 
   const clicked = (e) => {
     e.preventDefault();
@@ -61,7 +78,7 @@ export const MainHome = () => {
         setResultCatchPhrase(response.data.catchPhrase);
         setResultGenre(response.data.genre);
       } else {
-        console.error(response);
+        resetState(e);
         alert("検索結果が見つかりませんでした");
       }
     });
@@ -90,6 +107,8 @@ export const MainHome = () => {
             <GoogleMapComponent
               referenceSitePosition={referenceSitePosition}
               resultSitePosition={resultSitePosition}
+              rendering={rendering}
+              setRendering={setRendering}
             />
           </Grid>
 
@@ -139,7 +158,7 @@ export const MainHome = () => {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
-                      onClick={() => setSearched(false)}
+                      onClick={(e) => resetState(e)}
                     >
                       検索条件変更
                     </Button>
