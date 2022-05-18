@@ -41,6 +41,7 @@ export const MainHome = () => {
   const [resultCatchPhrase, setResultCatchPhrase] = useState("");
   const [resultGenre, setResultGenre] = useState("");
   const [resultCount, setResultCount] = useState(0);
+  const [restrauntImage, setRestrauntImage] = useState("");
 
   const [searched, setSearched] = useState(false);
 
@@ -61,6 +62,7 @@ export const MainHome = () => {
     setResultCatchPhrase("");
     setResultGenre("");
     setRange(1);
+    setRestrauntImage("");
   };
 
   const clicked = (e) => {
@@ -84,6 +86,7 @@ export const MainHome = () => {
         setResultCatchPhrase(response.data.catchPhrase);
         setResultGenre(response.data.genre);
         setResultCount(response.data.resultCount);
+        setRestrauntImage(response.data.restrauntImage);
       } else {
         resetState(e);
         alert("検索結果が見つかりませんでした");
@@ -99,7 +102,7 @@ export const MainHome = () => {
           <CssBaseline />
           <Grid
             item
-            xs={false}
+            xs={12}
             sm={4}
             md={7}
             sx={{
@@ -152,6 +155,7 @@ export const MainHome = () => {
                     <h3>{resultCatchPhrase}</h3>
                     <h3>{resultGenre}</h3>
                     <h3>該当件数/{resultCount}件</h3>
+                    <img src={restrauntImage} />
                     {/*TODO: size固定したい */}
                     <Button
                       type="submit"
@@ -179,7 +183,10 @@ export const MainHome = () => {
                       referenceSitePosition={referenceSitePosition}
                       setReferenceSitePosition={setReferenceSitePosition}
                     />
-                    <GenreCodeSelector setGenreCode={setGenreCode} />
+                    <GenreCodeSelector
+                      genreCode={genreCode}
+                      setGenreCode={setGenreCode}
+                    />
                     <BudgetCodeSelector setBugetCode={setBugetCode} />
                     <RangeSelector setRange={setRange} />
                     <Button
@@ -194,8 +201,6 @@ export const MainHome = () => {
                     >
                       検索
                     </Button>
-                    <h3>{referenceSitePosition.lat}</h3>
-                    <h3>{range}</h3>
                   </>
                 )}
               </Box>

@@ -60,6 +60,7 @@ public class RestaurantServise {
             apiRestaurantData.setLng(shopDatas.get("lng").asText());
             apiRestaurantData.setCatchPhrase(shopDatas.get("genre").get("catch").asText());
             apiRestaurantData.setGenre(shopDatas.get("genre").get("name").asText());
+            apiRestaurantData.setRestrauntImage(shopDatas.get("photo").get("pc").get("l").asText());
 
             apiRestaurantDataList.add(apiRestaurantData);
         }
