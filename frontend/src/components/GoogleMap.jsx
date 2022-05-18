@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { breakpoints } from "@mui/system";
 
 const containerStyle = {
   width: "100%",
@@ -52,13 +53,32 @@ export const GoogleMapComponent = (props) => {
     // console.log(referenceSiteMarkerPositions);
 
     //初回以降はmapのセンターをmarkerの部分に変更する
-    if (props.rendering) {
+    if (props.rendering && props.searched) {
+      setCenterPosition({ lat: referenceSiteLat, lng: referenceSiteLng });
+
+      //検索範囲によって地図の縮尺を変更する
+      switch (props.range) {
+        case "3":
+          setZoom(15);
+          break;
+        case "4":
+          setZoom(14);
+          break;
+        case "5":
+          setZoom(13);
+          break;
+        default:
+          setZoom(16);
+          break;
+      }
+    } else if (props.rendering) {
       setCenterPosition({ lat: referenceSiteLat, lng: referenceSiteLng });
       setZoom(16);
     }
+
     //初回レンダリングにtrueへ
     props.setRendering(true);
-  }, [props.referenceSitePosition, props.resultSitePosition]);
+  }, [props.referenceSitePosition, props.resultSitePosition, props.searched]);
 
   return (
     <>

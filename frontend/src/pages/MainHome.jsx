@@ -16,6 +16,7 @@ import { getRestraunt } from "../api/getRestrauntAxios";
 import { GoogleMapComponent } from "../components/GoogleMap";
 import { GenreCodeSelector } from "../components/GenreCodeSelector";
 import { BudgetCodeSelector } from "../components/BudgetCodeSelector";
+import { RangeSelector } from "../components/RangeSelector";
 import { TextInput } from "../components/TextInput";
 import Header from "../components/materialUi/Header";
 
@@ -29,6 +30,7 @@ export const MainHome = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const [genreCode, setGenreCode] = useState("");
   const [bugetCode, setBugetCode] = useState("");
+  const [range, setRange] = useState(1);
 
   const [referenceSitePosition, setReferenceSitePosition] = useState({});
   const [resultSitePosition, setResultSitePosition] = useState({});
@@ -58,6 +60,7 @@ export const MainHome = () => {
     setResultAddress("");
     setResultCatchPhrase("");
     setResultGenre("");
+    setRange(1);
   };
 
   const clicked = (e) => {
@@ -67,6 +70,7 @@ export const MainHome = () => {
       referenceSiteLng: referenceSitePosition.lng,
       genreCode: genreCode,
       bugetCode: bugetCode,
+      range: range,
     }).then((response) => {
       if (response.status === 200) {
         setSearched(true);
@@ -112,6 +116,8 @@ export const MainHome = () => {
               resultSitePosition={resultSitePosition}
               rendering={rendering}
               setRendering={setRendering}
+              searched={searched}
+              range={range}
             />
           </Grid>
 
@@ -175,6 +181,7 @@ export const MainHome = () => {
                     />
                     <GenreCodeSelector setGenreCode={setGenreCode} />
                     <BudgetCodeSelector setBugetCode={setBugetCode} />
+                    <RangeSelector setRange={setRange} />
                     <Button
                       type="submit"
                       fullWidth
@@ -188,6 +195,7 @@ export const MainHome = () => {
                       検索
                     </Button>
                     <h3>{referenceSitePosition.lat}</h3>
+                    <h3>{range}</h3>
                   </>
                 )}
               </Box>

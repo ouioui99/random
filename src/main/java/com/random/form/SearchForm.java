@@ -8,4 +8,5 @@ public class SearchForm {
     private String referenceSiteLng;
     private String genreCode;
     private String bugetCode;
+    private Integer range;
 }
