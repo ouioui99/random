@@ -60,6 +60,7 @@ export const MainHome = () => {
     setResultAddress("");
     setResultCatchPhrase("");
     setResultGenre("");
+    setRange(1);
   };
 
   const clicked = (e) => {
@@ -115,6 +116,8 @@ export const MainHome = () => {
               resultSitePosition={resultSitePosition}
               rendering={rendering}
               setRendering={setRendering}
+              searched={searched}
+              range={range}
             />
           </Grid>
 
