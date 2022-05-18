@@ -13,11 +13,9 @@ export const RangeSelector = (props) => {
         id="range"
         label="range"
         onChange={(e) => props.setRange(e.target.value)}
-        defaultValue="1"
+        defaultValue=""
       >
-        <MenuItem selected value="1">
-          300m
-        </MenuItem>
+        <MenuItem value="1">300m</MenuItem>
         <MenuItem value="2">500m</MenuItem>
         <MenuItem value="3">1000m</MenuItem>
         <MenuItem value="4">2000m</MenuItem>
