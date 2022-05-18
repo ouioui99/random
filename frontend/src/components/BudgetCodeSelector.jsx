@@ -13,6 +13,7 @@ export const BudgetCodeSelector = (props) => {
         id="budgetSelector"
         label="budgetSelector"
         onChange={(e) => props.setBugetCode(e.target.value)}
+        value={props.genreCode}
         defaultValue=""
       >
         <MenuItem selected value="">
