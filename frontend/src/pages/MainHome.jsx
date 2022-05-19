@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+//mui系
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
@@ -8,6 +9,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import SearchIcon from "@mui/icons-material/Search";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 
 import { CheckLoggedIn } from "../CheckLogin";
 import { UserContext } from "../providers/UserProvider";
@@ -26,6 +30,12 @@ export const MainHome = () => {
   useEffect(() => {
     setIsLoggedIn(CheckLoggedIn());
   }, []);
+
+  const style = {
+    width: "100%",
+  };
+
+  const imgStyle = {};
 
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const [genreCode, setGenreCode] = useState("");
@@ -100,20 +110,8 @@ export const MainHome = () => {
       <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: "100vh" }}>
           <CssBaseline />
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundColor: (t) =>
-                t.palette.mode === "light"
-                  ? t.palette.grey[50]
-                  : t.palette.grey[900],
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
+
+          <Grid item xs={12} sm={4} md={7}>
             <GoogleMapComponent
               referenceSitePosition={referenceSitePosition}
               resultSitePosition={resultSitePosition}
@@ -142,26 +140,34 @@ export const MainHome = () => {
                 alignItems: "center",
               }}
             >
-              <Typography component="h1" variant="h5">
-                飲食店ランダム検索
-              </Typography>
-              <Box component="form" noValidate sx={{ mt: 1 }}>
-                {searched ? (
-                  <>
-                    <h3>{resultAddress}</h3>
+              {searched ? (
+                <>
+                  {/* 大きさを固定する */}
+                  <Grid item xs={false} sm={12} md={12}>
+                    <Box
+                      component="img"
+                      alt=""
+                      src={restrauntImage}
+                      sx={{ width: "200px" }}
+                    />
+                  </Grid>
+
+                  <Box component="form" noValidate sx={{ mt: 1 }}>
                     <a href={resultUrl}>
                       <h3>{resultRestrauntName}</h3>
                     </a>
+                    <h3>{resultAddress}</h3>
                     <h3>{resultCatchPhrase}</h3>
                     <h3>{resultGenre}</h3>
                     <h3>該当件数/{resultCount}件</h3>
-                    <img src={restrauntImage} />
+
                     {/*TODO: size固定したい */}
                     <Button
                       type="submit"
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
+                      endIcon={<AutorenewIcon />}
                       onClick={(e) => clicked(e)}
                     >
                       再検索
@@ -172,13 +178,19 @@ export const MainHome = () => {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
+                      endIcon={<SettingsBackupRestoreIcon />}
                       onClick={(e) => resetState(e)}
                     >
                       検索条件変更
                     </Button>
-                  </>
-                ) : (
-                  <>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Typography component="h1" variant="h5">
+                    飲食店ランダム検索
+                  </Typography>
+                  <Box component="form" noValidate sx={{ mt: 1 }}>
                     <TextInput
                       referenceSitePosition={referenceSitePosition}
                       setReferenceSitePosition={setReferenceSitePosition}
@@ -195,15 +207,16 @@ export const MainHome = () => {
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                       onClick={(e) => clicked(e)}
+                      endIcon={<SearchIcon />}
                       disabled={
                         !referenceSitePosition.lat && !referenceSitePosition.lng
                       }
                     >
                       検索
                     </Button>
-                  </>
-                )}
-              </Box>
+                  </Box>
+                </>
+              )}
             </Box>
           </Grid>
         </Grid>
