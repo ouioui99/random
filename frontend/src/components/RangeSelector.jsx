@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 export const RangeSelector = (props) => {
   return (
     <FormControl fullWidth margin="normal">
-      <InputLabel id="range">検索範囲（デフォルト値は半径300m）</InputLabel>
+      <InputLabel id="range">検索範囲（デフォルト値は半径500m）</InputLabel>
       <Select
         labelId="range"
         id="range"

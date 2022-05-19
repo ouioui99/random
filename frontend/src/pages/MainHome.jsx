@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
 import SearchIcon from "@mui/icons-material/Search";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
@@ -31,16 +32,10 @@ export const MainHome = () => {
     setIsLoggedIn(CheckLoggedIn());
   }, []);
 
-  const style = {
-    width: "100%",
-  };
-
-  const imgStyle = {};
-
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const [genreCode, setGenreCode] = useState("");
   const [bugetCode, setBugetCode] = useState("");
-  const [range, setRange] = useState(1);
+  const [range, setRange] = useState(2);
 
   const [referenceSitePosition, setReferenceSitePosition] = useState({});
   const [resultSitePosition, setResultSitePosition] = useState({});
@@ -106,20 +101,28 @@ export const MainHome = () => {
 
   return (
     <>
-      <Header></Header>
       <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: "100vh" }}>
           <CssBaseline />
+          <Header />
 
           <Grid item xs={12} sm={4} md={7}>
-            <GoogleMapComponent
-              referenceSitePosition={referenceSitePosition}
-              resultSitePosition={resultSitePosition}
-              rendering={rendering}
-              setRendering={setRendering}
-              searched={searched}
-              range={range}
-            />
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <div style={theme.mixins.toolbar} />
+              <GoogleMapComponent
+                referenceSitePosition={referenceSitePosition}
+                resultSitePosition={resultSitePosition}
+                rendering={rendering}
+                setRendering={setRendering}
+                searched={searched}
+                range={range}
+              />
+            </Box>
           </Grid>
 
           <Grid
@@ -127,13 +130,13 @@ export const MainHome = () => {
             xs={12}
             sm={8}
             md={5}
-            component={Paper}
-            elevation={6}
-            square
+            // component={Paper}
+            // elevation={6}
+            // square
           >
             <Box
               sx={{
-                my: 8,
+                // py: 2,
                 mx: 4,
                 display: "flex",
                 flexDirection: "column",
@@ -143,16 +146,21 @@ export const MainHome = () => {
               {searched ? (
                 <>
                   {/* 大きさを固定する */}
-                  <Grid item xs={false} sm={12} md={12}>
+                  <Paper
+                    elevation={0}
+                    sx={{ display: { md: "block", xs: "none" } }}
+                  >
+                    <div style={theme.mixins.toolbar} />
+                    <div style={theme.mixins.toolbar} />
                     <Box
                       component="img"
                       alt=""
                       src={restrauntImage}
                       sx={{ width: "200px" }}
                     />
-                  </Grid>
+                  </Paper>
 
-                  <Box component="form" noValidate sx={{ mt: 1 }}>
+                  <Box component="form" noValidate sx={{ mt: 4 }}>
                     <a href={resultUrl}>
                       <h3>{resultRestrauntName}</h3>
                     </a>
@@ -187,10 +195,18 @@ export const MainHome = () => {
                 </>
               ) : (
                 <>
+                  <Paper
+                    elevation={0}
+                    sx={{ display: { md: "block", xs: "none" } }}
+                  >
+                    <div style={theme.mixins.toolbar} />
+                    <div style={theme.mixins.toolbar} />
+                  </Paper>
+
                   <Typography component="h1" variant="h5">
                     飲食店ランダム検索
                   </Typography>
-                  <Box component="form" noValidate sx={{ mt: 1 }}>
+                  <Box component="form" noValidate sx={{ mt: 5 }}>
                     <TextInput
                       referenceSitePosition={referenceSitePosition}
                       setReferenceSitePosition={setReferenceSitePosition}
