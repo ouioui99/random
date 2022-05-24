@@ -1,14 +1,10 @@
-import React,{ useContext } from 'react';
-import { UserContext } from './providers/UserProvider';
+import React, { useContext } from "react";
+import { UserContext } from "./providers/UserProvider";
 
 export const CheckLoggedIn = () => {
-    if(!sessionStorage.getItem("session"))  {
-        return false;
-    } else {
-        return true;
-    }
-    
-}
- 
-
- 
+  if (sessionStorage.getItem("session") === "sessionID") {
+    return true;
+  } else {
+    return false;
+  }
+};
