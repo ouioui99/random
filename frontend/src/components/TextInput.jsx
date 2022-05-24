@@ -7,7 +7,6 @@ export const TextInput = (props) => {
   const [referenceSite, setReferenceSiteInput] = useState("");
 
   useEffect(() => {
-    console.log(Object.keys(props.referenceSitePosition).length);
     if (!Object.keys(props.referenceSitePosition).length) {
       setReferenceSiteInput("");
     }

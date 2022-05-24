@@ -125,18 +125,9 @@ export const MainHome = () => {
             </Box>
           </Grid>
 
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={5}
-            // component={Paper}
-            // elevation={6}
-            // square
-          >
+          <Grid item xs={12} sm={8} md={5}>
             <Box
               sx={{
-                // py: 2,
                 mx: 4,
                 display: "flex",
                 flexDirection: "column",
@@ -162,12 +153,12 @@ export const MainHome = () => {
 
                   <Box component="form" noValidate sx={{ mt: 4 }}>
                     <a href={resultUrl}>
-                      <h3>{resultRestrauntName}</h3>
+                      <h4>{resultRestrauntName}</h4>
                     </a>
-                    <h3>{resultAddress}</h3>
-                    <h3>{resultCatchPhrase}</h3>
-                    <h3>{resultGenre}</h3>
-                    <h3>該当件数/{resultCount}件</h3>
+                    <h4>{resultAddress}</h4>
+                    <h4>{resultCatchPhrase}</h4>
+                    <h4>{resultGenre}</h4>
+                    <h4>該当件数/{resultCount}件</h4>
 
                     {/*TODO: size固定したい */}
                     <Button
