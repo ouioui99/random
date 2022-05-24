@@ -26,6 +26,7 @@ function Router() {
               </Auth>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
