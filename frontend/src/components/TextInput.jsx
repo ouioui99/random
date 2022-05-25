@@ -41,6 +41,7 @@ export const TextInput = (props) => {
         value={referenceSite}
         onChange={(e) => setReferenceSiteInput(e.target.value)}
         onBlur={(e) => handleOnblur(e)}
+        sx={props.theme}
       />
     </>
   );

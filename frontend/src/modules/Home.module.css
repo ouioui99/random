@@ -1,0 +1,23 @@
+.container {
+  position: relative;
+}
+
+.pStyle {
+  position: absolute;
+  top: 25%;
+  left: 50.5%;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  margin: 0;
+  font-size: 30px;
+}
+
+.buttonStyle {
+  position: absolute;
+  top: 50%;
+  left: 50.5%;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  margin: 0;
+  font-size: 30px;
+}

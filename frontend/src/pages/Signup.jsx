@@ -5,7 +5,9 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../theme/theme";
+import textFieldTheme from "../theme/component/textFieldTheme";
 
 import { UserContext } from "../providers/UserProvider";
 import { postSignup } from "../api/userAxios";
@@ -21,8 +23,6 @@ export const Signup = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
-
-  const theme = createTheme();
 
   const handleSubmit = (e) => {
     if (password === passwordConf) {
@@ -70,6 +70,7 @@ export const Signup = () => {
                 autoComplete="name"
                 autoFocus
                 onChange={(e) => setName(e.target.value)}
+                sx={textFieldTheme}
               />
               <TextField
                 margin="normal"
@@ -81,6 +82,7 @@ export const Signup = () => {
                 id="password"
                 autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
+                sx={textFieldTheme}
               />
               <TextField
                 margin="normal"
@@ -92,6 +94,7 @@ export const Signup = () => {
                 id="passwordConf"
                 autoComplete="current-password"
                 onChange={(e) => setPasswordConf(e.target.value)}
+                sx={textFieldTheme}
               />
               {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}

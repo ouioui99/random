@@ -13,6 +13,8 @@ import Toolbar from "@mui/material/Toolbar";
 import SearchIcon from "@mui/icons-material/Search";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
+import theme from "../theme/theme";
+import textFieldTheme from "../theme/component/textFieldTheme";
 
 import { CheckLoggedIn } from "../CheckLogin";
 import { UserContext } from "../providers/UserProvider";
@@ -26,8 +28,6 @@ import { TextInput } from "../components/TextInput";
 import Header from "../components/materialUi/Header";
 
 export const MainHome = () => {
-  const theme = createTheme();
-
   useEffect(() => {
     setIsLoggedIn(CheckLoggedIn());
   }, []);
@@ -97,6 +97,12 @@ export const MainHome = () => {
         alert("検索結果が見つかりませんでした");
       }
     });
+  };
+
+  const test = {
+    "& .MuiOutlinedInput-input": {
+      borderColor: "blue",
+    },
   };
 
   return (
@@ -201,13 +207,18 @@ export const MainHome = () => {
                     <TextInput
                       referenceSitePosition={referenceSitePosition}
                       setReferenceSitePosition={setReferenceSitePosition}
+                      theme={textFieldTheme}
                     />
                     <GenreCodeSelector
                       genreCode={genreCode}
                       setGenreCode={setGenreCode}
+                      theme={test}
                     />
-                    <BudgetCodeSelector setBugetCode={setBugetCode} />
-                    <RangeSelector setRange={setRange} />
+                    <BudgetCodeSelector
+                      bugetCode={bugetCode}
+                      setBugetCode={setBugetCode}
+                    />
+                    <RangeSelector range={range} setRange={setRange} />
                     <Button
                       type="submit"
                       fullWidth

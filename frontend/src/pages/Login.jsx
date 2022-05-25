@@ -5,7 +5,9 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../theme/theme";
+import textFieldTheme from "../theme/component/textFieldTheme";
 
 import { UserContext, LoadContext } from "../providers/UserProvider";
 import { postLogin } from "../api/userAxios";
@@ -16,8 +18,6 @@ import Header from "../components/materialUi/Header";
 import { CheckLoggedIn } from "../CheckLogin";
 
 export const Login = () => {
-  const theme = createTheme();
-
   const { setIsLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export const Login = () => {
       password: password,
     }).then((response) => {
       if (response.status === 200) {
-        navigate("/");
+        navigate("/random");
         sessionStorage.setItem("session", "sessionID");
         sessionStorage.setItem("name", response.data.name);
         setIsLoggedIn(CheckLoggedIn());
@@ -74,6 +74,7 @@ export const Login = () => {
                 autoComplete="name"
                 autoFocus
                 onChange={(e) => setName(e.target.value)}
+                sx={textFieldTheme}
               />
               <TextField
                 margin="normal"
@@ -85,6 +86,7 @@ export const Login = () => {
                 id="password"
                 autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
+                sx={textFieldTheme}
               />
               {/* <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}

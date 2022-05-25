@@ -9,11 +9,11 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import theme from "../../theme/theme";
 
 import { UserContext } from "../../providers/UserProvider";
 
 export default function Header() {
-  const theme = createTheme();
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -21,11 +21,11 @@ export default function Header() {
   const logout = () => {
     sessionStorage.removeItem("session");
     setIsLoggedIn(false);
-    navigate("/test");
+    navigate("/");
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <AppBar position="fixed">
         <Toolbar>
           {/* <IconButton
@@ -37,16 +37,8 @@ export default function Header() {
                     >
                         <MenuIcon />
                     </IconButton> */}
-          <Button
-            color="inherit"
-            size="large"
-            onClick={() => navigate("/test")}
-          >
-            <Typography
-              variant="h6"
-              component="div"
-              onClick={() => navigate("/test")}
-            >
+          <Button color="inherit" size="large" onClick={() => navigate("/")}>
+            <Typography variant="h6" component="div">
               Random
             </Typography>
           </Button>
@@ -93,6 +85,6 @@ export default function Header() {
           )}
         </Toolbar>
       </AppBar>
-    </>
+    </ThemeProvider>
   );
 }
