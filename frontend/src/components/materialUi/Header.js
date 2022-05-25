@@ -1,31 +1,34 @@
-import React, {useContext} from 'react';
-import { useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import theme from "../../theme/theme";
 
-import { UserContext } from '../../providers/UserProvider';
+import { UserContext } from "../../providers/UserProvider";
 
 export default function Header() {
-    const {isLoggedIn,setIsLoggedIn} = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const logout = () => {
-        sessionStorage.removeItem("session");
-        navigate('/test');
-    }
+  const logout = () => {
+    sessionStorage.removeItem("session");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
-
-    return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    {/* <IconButton
+  return (
+    <ThemeProvider theme={theme}>
+      <AppBar position="fixed">
+        <Toolbar>
+          {/* <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
@@ -34,18 +37,54 @@ export default function Header() {
                     >
                         <MenuIcon />
                     </IconButton> */}
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={()=>navigate('/test')}>
-                        Random
-                    </Typography>
-                    {isLoggedIn ? 
-                    <Button color="inherit" onClick={()=>logout()}>Logout</Button> : 
-                    <>
-                        <Button color="inherit" onClick={()=>navigate('/login')}>Login</Button>
-                        <Button color="inherit" onClick={()=>navigate('/signup')}>SignUp</Button>
-                    </>
-                    }
-                </Toolbar>
-            </AppBar>
-        </Box>
-    );
+          <Button color="inherit" size="large" onClick={() => navigate("/")}>
+            <Typography variant="h6" component="div">
+              Random
+            </Typography>
+          </Button>
+          {isLoggedIn ? (
+            <>
+              <Typography
+                align="right"
+                variant="subtitle2"
+                component="div"
+                sx={{ flexGrow: 10 }}
+                pr={1}
+              >
+                ようこそ、{sessionStorage.getItem("name")}さん
+              </Typography>
+              <Button color="inherit" size="large" onClick={() => logout()}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Grid container>
+              <Grid
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <Button
+                  align="right"
+                  color="inherit"
+                  size="large"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </Button>
+                <Button
+                  color="inherit"
+                  size="large"
+                  onClick={() => navigate("/signup")}
+                >
+                  SignUp
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+        </Toolbar>
+      </AppBar>
+    </ThemeProvider>
+  );
 }

@@ -4,7 +4,7 @@ import { breakpoints } from "@mui/system";
 
 const containerStyle = {
   width: "100%",
-  height: "100%",
+  height: "92%",
 };
 
 const GoogleMapsApiKey = process.env.React_APP_GOOGLE_MAP_API;

@@ -16,6 +16,7 @@ public class SearchRestaurantService {
     private String catchPhrase;
     private String genre;
     private Integer resultCount;
+    private String restrauntImage;
 
     public SearchRestaurantService(ApiRestaurantData resultRestrauntData) {
         this.name = resultRestrauntData.getName();
@@ -26,6 +27,7 @@ public class SearchRestaurantService {
         this.catchPhrase = resultRestrauntData.getCatchPhrase();
         this.genre = resultRestrauntData.getGenre();
         this.resultCount = resultRestrauntData.getResultCount();
+        this.restrauntImage = resultRestrauntData.getRestrauntImage();
     }
 
 }

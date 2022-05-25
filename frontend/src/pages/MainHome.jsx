@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+//mui系
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
@@ -8,6 +9,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import SearchIcon from "@mui/icons-material/Search";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
+import theme from "../theme/theme";
+import textFieldTheme from "../theme/component/textFieldTheme";
 
 import { CheckLoggedIn } from "../CheckLogin";
 import { UserContext } from "../providers/UserProvider";
@@ -21,8 +28,6 @@ import { TextInput } from "../components/TextInput";
 import Header from "../components/materialUi/Header";
 
 export const MainHome = () => {
-  const theme = createTheme();
-
   useEffect(() => {
     setIsLoggedIn(CheckLoggedIn());
   }, []);
@@ -30,7 +35,7 @@ export const MainHome = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const [genreCode, setGenreCode] = useState("");
   const [bugetCode, setBugetCode] = useState("");
-  const [range, setRange] = useState(1);
+  const [range, setRange] = useState(2);
 
   const [referenceSitePosition, setReferenceSitePosition] = useState({});
   const [resultSitePosition, setResultSitePosition] = useState({});
@@ -41,6 +46,7 @@ export const MainHome = () => {
   const [resultCatchPhrase, setResultCatchPhrase] = useState("");
   const [resultGenre, setResultGenre] = useState("");
   const [resultCount, setResultCount] = useState(0);
+  const [restrauntImage, setRestrauntImage] = useState("");
 
   const [searched, setSearched] = useState(false);
 
@@ -61,6 +67,7 @@ export const MainHome = () => {
     setResultCatchPhrase("");
     setResultGenre("");
     setRange(1);
+    setRestrauntImage("");
   };
 
   const clicked = (e) => {
@@ -84,6 +91,7 @@ export const MainHome = () => {
         setResultCatchPhrase(response.data.catchPhrase);
         setResultGenre(response.data.genre);
         setResultCount(response.data.resultCount);
+        setRestrauntImage(response.data.restrauntImage);
       } else {
         resetState(e);
         alert("検索結果が見つかりませんでした");
@@ -91,73 +99,83 @@ export const MainHome = () => {
     });
   };
 
+  const test = {
+    "& .MuiOutlinedInput-input": {
+      borderColor: "blue",
+    },
+  };
+
   return (
     <>
-      <Header></Header>
       <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: "100vh" }}>
           <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundColor: (t) =>
-                t.palette.mode === "light"
-                  ? t.palette.grey[50]
-                  : t.palette.grey[900],
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <GoogleMapComponent
-              referenceSitePosition={referenceSitePosition}
-              resultSitePosition={resultSitePosition}
-              rendering={rendering}
-              setRendering={setRendering}
-              searched={searched}
-              range={range}
-            />
-          </Grid>
+          <Header />
 
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={5}
-            component={Paper}
-            elevation={6}
-            square
-          >
+          <Grid item xs={12} sm={4} md={7}>
             <Box
               sx={{
-                my: 8,
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <div style={theme.mixins.toolbar} />
+              <GoogleMapComponent
+                referenceSitePosition={referenceSitePosition}
+                resultSitePosition={resultSitePosition}
+                rendering={rendering}
+                setRendering={setRendering}
+                searched={searched}
+                range={range}
+              />
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} sm={8} md={5}>
+            <Box
+              sx={{
                 mx: 4,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
             >
-              <Typography component="h1" variant="h5">
-                飲食店ランダム検索
-              </Typography>
-              <Box component="form" noValidate sx={{ mt: 1 }}>
-                {searched ? (
-                  <>
-                    <h3>{resultAddress}</h3>
+              {searched ? (
+                <>
+                  {/* 大きさを固定する */}
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      display: { md: "block", xs: "none" },
+                      backgroundColor: "background.default",
+                    }}
+                  >
+                    <div style={theme.mixins.toolbar} />
+                    <div style={theme.mixins.toolbar} />
+                    <Box
+                      component="img"
+                      alt=""
+                      src={restrauntImage}
+                      sx={{ width: "200px" }}
+                    />
+                  </Paper>
+
+                  <Box component="form" noValidate sx={{ mt: 4 }}>
                     <a href={resultUrl}>
-                      <h3>{resultRestrauntName}</h3>
+                      <h4>{resultRestrauntName}</h4>
                     </a>
-                    <h3>{resultCatchPhrase}</h3>
-                    <h3>{resultGenre}</h3>
-                    <h3>該当件数/{resultCount}件</h3>
+                    <h4>{resultAddress}</h4>
+                    <h4>{resultCatchPhrase}</h4>
+                    <h4>{resultGenre}</h4>
+                    <h4>該当件数/{resultCount}件</h4>
+
                     {/*TODO: size固定したい */}
                     <Button
                       type="submit"
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
+                      endIcon={<AutorenewIcon />}
                       onClick={(e) => clicked(e)}
                     >
                       再検索
@@ -168,37 +186,57 @@ export const MainHome = () => {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
+                      endIcon={<SettingsBackupRestoreIcon />}
                       onClick={(e) => resetState(e)}
                     >
                       検索条件変更
                     </Button>
-                  </>
-                ) : (
-                  <>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Paper
+                    elevation={0}
+                    sx={{ display: { md: "block", xs: "none" } }}
+                  >
+                    <div style={theme.mixins.toolbar} />
+                    <div style={theme.mixins.toolbar} />
+                  </Paper>
+
+                  <Typography component="h1" variant="h5">
+                    飲食店ランダム検索
+                  </Typography>
+                  <Box component="form" noValidate sx={{ mt: 5 }}>
                     <TextInput
                       referenceSitePosition={referenceSitePosition}
                       setReferenceSitePosition={setReferenceSitePosition}
+                      theme={textFieldTheme}
                     />
-                    <GenreCodeSelector setGenreCode={setGenreCode} />
-                    <BudgetCodeSelector setBugetCode={setBugetCode} />
-                    <RangeSelector setRange={setRange} />
+                    <GenreCodeSelector
+                      genreCode={genreCode}
+                      setGenreCode={setGenreCode}
+                    />
+                    <BudgetCodeSelector
+                      bugetCode={bugetCode}
+                      setBugetCode={setBugetCode}
+                    />
+                    <RangeSelector range={range} setRange={setRange} />
                     <Button
                       type="submit"
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                       onClick={(e) => clicked(e)}
+                      endIcon={<SearchIcon />}
                       disabled={
                         !referenceSitePosition.lat && !referenceSitePosition.lng
                       }
                     >
                       検索
                     </Button>
-                    <h3>{referenceSitePosition.lat}</h3>
-                    <h3>{range}</h3>
-                  </>
-                )}
-              </Box>
+                  </Box>
+                </>
+              )}
             </Box>
           </Grid>
         </Grid>
