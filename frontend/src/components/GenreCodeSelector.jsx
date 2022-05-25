@@ -15,7 +15,7 @@ export const GenreCodeSelector = (props) => {
         onChange={(e) => props.setGenreCode(e.target.value)}
         value={props.genreCode}
         defaultValue=""
-        sx={props.theme}
+        sx={{ border: 0.5 }}
       >
         <MenuItem value="" selected>
           指定なし

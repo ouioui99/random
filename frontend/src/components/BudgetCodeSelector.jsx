@@ -15,6 +15,7 @@ export const BudgetCodeSelector = (props) => {
         onChange={(e) => props.setBugetCode(e.target.value)}
         value={props.budgetCode}
         defaultValue=""
+        sx={{ border: 0.5 }}
       >
         <MenuItem value="">指定なし</MenuItem>
         <MenuItem value="B009,B010">~1000 円</MenuItem>

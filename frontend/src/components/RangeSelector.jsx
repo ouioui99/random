@@ -15,6 +15,7 @@ export const RangeSelector = (props) => {
         onChange={(e) => props.setRange(e.target.value)}
         value={props.range}
         defaultValue=""
+        sx={{ border: 0.5 }}
       >
         <MenuItem value="1">300m</MenuItem>
         <MenuItem value="2">500m</MenuItem>
