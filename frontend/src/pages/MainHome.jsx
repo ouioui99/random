@@ -145,7 +145,10 @@ export const MainHome = () => {
                   {/* 大きさを固定する */}
                   <Paper
                     elevation={0}
-                    sx={{ display: { md: "block", xs: "none" } }}
+                    sx={{
+                      display: { md: "block", xs: "none" },
+                      backgroundColor: "background.default",
+                    }}
                   >
                     <div style={theme.mixins.toolbar} />
                     <div style={theme.mixins.toolbar} />
@@ -212,7 +215,6 @@ export const MainHome = () => {
                     <GenreCodeSelector
                       genreCode={genreCode}
                       setGenreCode={setGenreCode}
-                      theme={test}
                     />
                     <BudgetCodeSelector
                       bugetCode={bugetCode}
