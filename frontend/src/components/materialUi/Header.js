@@ -11,6 +11,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import theme from "../../theme/theme";
 
+import styles from "../../modules/Header.module.css";
+
 import { UserContext } from "../../providers/UserProvider";
 
 export default function Header() {
@@ -38,7 +40,11 @@ export default function Header() {
                         <MenuIcon />
                     </IconButton> */}
           <Button color="inherit" size="large" onClick={() => navigate("/")}>
-            <Typography variant="h6" component="div">
+            <Typography
+              variant="h6"
+              component="div"
+              className={styles.mainLogo}
+            >
               Random
             </Typography>
           </Button>
@@ -53,7 +59,12 @@ export default function Header() {
               >
                 ようこそ、{sessionStorage.getItem("name")}さん
               </Typography>
-              <Button color="inherit" size="large" onClick={() => logout()}>
+              <Button
+                disableElevation
+                variant="contained"
+                size="large"
+                onClick={() => logout()}
+              >
                 Logout
               </Button>
             </>
@@ -66,15 +77,17 @@ export default function Header() {
                 alignItems="center"
               >
                 <Button
+                  disableElevation
+                  variant="contained"
                   align="right"
-                  color="inherit"
                   size="large"
                   onClick={() => navigate("/login")}
                 >
                   Login
                 </Button>
                 <Button
-                  color="inherit"
+                  disableElevation
+                  variant="contained"
                   size="large"
                   onClick={() => navigate("/signup")}
                 >
