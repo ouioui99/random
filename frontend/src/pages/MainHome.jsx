@@ -32,6 +32,16 @@ export const MainHome = () => {
     setIsLoggedIn(CheckLoggedIn());
   }, []);
 
+  const creditStyle = {
+    fontSize: "5px",
+    textAlign: "right",
+  };
+
+  const imgCreditStyle = {
+    fontSize: "1px",
+    textAlign: "right",
+  };
+
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const [genreCode, setGenreCode] = useState("");
   const [bugetCode, setBugetCode] = useState("");
@@ -99,12 +109,6 @@ export const MainHome = () => {
     });
   };
 
-  const test = {
-    "& .MuiOutlinedInput-input": {
-      borderColor: "blue",
-    },
-  };
-
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -120,6 +124,7 @@ export const MainHome = () => {
               }}
             >
               <div style={theme.mixins.toolbar} />
+
               <GoogleMapComponent
                 referenceSitePosition={referenceSitePosition}
                 resultSitePosition={resultSitePosition}
@@ -158,6 +163,9 @@ export const MainHome = () => {
                       src={restrauntImage}
                       sx={{ width: "200px" }}
                     />
+                    <div style={imgCreditStyle}>
+                      【画像提供：ホットペッパー グルメ】
+                    </div>
                   </Paper>
 
                   <Box component="form" noValidate sx={{ mt: 4 }}>
@@ -234,6 +242,12 @@ export const MainHome = () => {
                     >
                       検索
                     </Button>
+                    <div style={creditStyle}>
+                      Powered by
+                      <a href="http://webservice.recruit.co.jp/">
+                        ホットペッパー Webサービス
+                      </a>
+                    </div>
                   </Box>
                 </>
               )}
