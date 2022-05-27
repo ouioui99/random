@@ -9,10 +9,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Toolbar from "@mui/material/Toolbar";
 import SearchIcon from "@mui/icons-material/Search";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import theme from "../theme/theme";
 import textFieldTheme from "../theme/component/textFieldTheme";
 
@@ -58,6 +60,8 @@ export const MainHome = () => {
   const [resultCount, setResultCount] = useState(0);
   const [restrauntImage, setRestrauntImage] = useState("");
 
+  const [resultHistory, setResultHistory] = useState([]);
+
   const [searched, setSearched] = useState(false);
 
   //初回レンダリング検知state
@@ -102,6 +106,13 @@ export const MainHome = () => {
         setResultGenre(response.data.genre);
         setResultCount(response.data.resultCount);
         setRestrauntImage(response.data.restrauntImage);
+        setResultHistory([
+          ...resultHistory,
+          {
+            url: response.data.url,
+            name: response.data.name,
+          },
+        ]);
       } else {
         resetState(e);
         alert("検索結果が見つかりませんでした");
@@ -176,6 +187,13 @@ export const MainHome = () => {
                     <h4>{resultCatchPhrase}</h4>
                     <h4>{resultGenre}</h4>
                     <h4>該当件数/{resultCount}件</h4>
+                    {resultHistory.map((historyHash, index) => {
+                      return (
+                        <a href={historyHash.url} key={index}>
+                          <h4>{historyHash.name}</h4>
+                        </a>
+                      );
+                    })}
 
                     {/*TODO: size固定したい */}
                     <Button
