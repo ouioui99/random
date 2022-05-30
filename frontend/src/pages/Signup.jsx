@@ -5,8 +5,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../theme/theme";
+
 import textFieldTheme from "../theme/component/textFieldTheme";
 
 import { UserContext } from "../providers/UserProvider";
@@ -45,75 +44,74 @@ export const Signup = () => {
   return (
     <>
       <Header></Header>
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 18,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="name"
-                name="name"
-                autoComplete="name"
-                autoFocus
-                onChange={(e) => setName(e.target.value)}
-                sx={textFieldTheme}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
-                sx={textFieldTheme}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="passwordConf"
-                label="Password Confirm"
-                type="password"
-                id="passwordConf"
-                autoComplete="current-password"
-                onChange={(e) => setPasswordConf(e.target.value)}
-                sx={textFieldTheme}
-              />
-              {/* <FormControlLabel
+
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 18,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              onChange={(e) => setName(e.target.value)}
+              sx={textFieldTheme}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+              sx={textFieldTheme}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="passwordConf"
+              label="Password Confirm"
+              type="password"
+              id="passwordConf"
+              autoComplete="current-password"
+              onChange={(e) => setPasswordConf(e.target.value)}
+              sx={textFieldTheme}
+            />
+            {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                             /> */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                disabled={!name || !password || !passwordConf ? true : false}
-                onClick={(e) => handleSubmit(e)}
-              >
-                Sign Up
-              </Button>
-            </Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={!name || !password || !passwordConf ? true : false}
+              onClick={(e) => handleSubmit(e)}
+            >
+              Sign Up
+            </Button>
           </Box>
-        </Container>
-      </ThemeProvider>
+        </Box>
+      </Container>
     </>
   );
 };

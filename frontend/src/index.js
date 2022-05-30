@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Router from "./router/Router";
 import reportWebVitals from "./reportWebVitals";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import theme from "../src/theme/theme";
 
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
@@ -12,7 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <LoadScript googleMapsApiKey={GoogleMapsApiKey}>
     <React.StrictMode>
-      <Router />
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
     </React.StrictMode>
   </LoadScript>
 );
