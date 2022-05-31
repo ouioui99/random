@@ -17,9 +17,7 @@ export const GenreCodeSelector = (props) => {
         defaultValue=""
         sx={{ border: 0.5 }}
       >
-        <MenuItem value="" selected>
-          指定なし
-        </MenuItem>
+        <MenuItem value="">指定なし</MenuItem>
         <MenuItem value="G001">居酒屋</MenuItem>
         <MenuItem value="G002">ダイニングバー・バル</MenuItem>
         <MenuItem value="G003">創作料理</MenuItem>
