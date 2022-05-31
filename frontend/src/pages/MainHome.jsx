@@ -155,116 +155,117 @@ export const MainHome = () => {
             alignItems: "center",
           }}
         >
-          <Box sx={{ width: "100%" }}>
-            {searched ? (
-              <>
-                {/* 大きさを固定する */}
-                <Paper
-                  elevation={0}
-                  sx={{
-                    display: { md: "block", xs: "none" },
-                    backgroundColor: "background.default",
-                  }}
-                >
-                  <div style={theme.mixins.toolbar} />
-                  <Box
-                    component="img"
-                    alt=""
-                    src={restrauntImage}
-                    sx={{ width: "200px" }}
-                  />
-                  <div style={imgCreditStyle}>
-                    【画像提供：ホットペッパー グルメ】
-                  </div>
-                </Paper>
+          {searched ? (
+            <>
+              {/* 大きさを固定する */}
+              <Paper
+                elevation={0}
+                sx={{
+                  display: { md: "block", xs: "none" },
+                  backgroundColor: "background.default",
+                }}
+              >
+                <div style={theme.mixins.toolbar} />
+                <div style={theme.mixins.toolbar} />
+              </Paper>
+              <Box component="div" sx={{ width: "200px" }} alignItems="center">
+                <img src={restrauntImage} />
 
-                <Box component="form" noValidate sx={{ mt: 4 }}>
-                  <a href={resultUrl}>
-                    <h4>{resultRestrauntName}</h4>
+                <div style={imgCreditStyle}>
+                  【画像提供：ホットペッパー グルメ】
+                </div>
+              </Box>
+              <Box component="form" noValidate sx={{ pt: 3 }}>
+                <a href={resultUrl}>
+                  <h3>{resultRestrauntName}</h3>
+                </a>
+                <h4>{resultAddress}</h4>
+                <h4>{resultCatchPhrase}</h4>
+                <h4>{resultGenre}</h4>
+                <h4>該当件数/{resultCount}件</h4>
+
+                {/*TODO: size固定したい */}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 1, mb: 2 }}
+                  endIcon={<AutorenewIcon />}
+                  onClick={(e) => fetchRestraunt(e)}
+                >
+                  再検索
+                </Button>
+                {/*TODO: size固定したい */}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 1, mb: 2 }}
+                  endIcon={<SettingsBackupRestoreIcon />}
+                  onClick={(e) => resetState(e)}
+                >
+                  検索条件変更
+                </Button>
+                <ResultHistory resultHistoryHashList={resultHistoryHashList} />
+              </Box>
+            </>
+          ) : (
+            <>
+              <Paper
+                elevation={0}
+                sx={{
+                  display: { md: "block", xs: "none" },
+                  bgcolor: "background.default",
+                }}
+              >
+                <div style={theme.mixins.toolbar} />
+                <div style={theme.mixins.toolbar} />
+              </Paper>
+
+              <Typography
+                component="h1"
+                variant="h5"
+                sx={{ textAlign: "center" }}
+              >
+                飲食店ランダム検索
+              </Typography>
+              <Box component="form" noValidate sx={{ mt: 5 }}>
+                <TextInput
+                  referenceSitePosition={referenceSitePosition}
+                  setReferenceSitePosition={setReferenceSitePosition}
+                  theme={textFieldTheme}
+                />
+                <GenreCodeSelector
+                  genreCode={genreCode}
+                  setGenreCode={setGenreCode}
+                />
+                <BudgetCodeSelector
+                  bugetCode={bugetCode}
+                  setBugetCode={setBugetCode}
+                />
+                <RangeSelector range={range} setRange={setRange} />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={(e) => fetchRestraunt(e)}
+                  endIcon={<SearchIcon />}
+                  disabled={
+                    !referenceSitePosition.lat && !referenceSitePosition.lng
+                  }
+                >
+                  検索
+                </Button>
+                <div style={creditStyle}>
+                  Powered by
+                  <a href="http://webservice.recruit.co.jp/">
+                    ホットペッパー Webサービス
                   </a>
-                  <h4>{resultAddress}</h4>
-                  <h4>{resultCatchPhrase}</h4>
-                  <h4>{resultGenre}</h4>
-                  <h4>該当件数/{resultCount}件</h4>
-
-                  {/*TODO: size固定したい */}
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    endIcon={<AutorenewIcon />}
-                    onClick={(e) => fetchRestraunt(e)}
-                  >
-                    再検索
-                  </Button>
-                  {/*TODO: size固定したい */}
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    endIcon={<SettingsBackupRestoreIcon />}
-                    onClick={(e) => resetState(e)}
-                  >
-                    検索条件変更
-                  </Button>
-                  <ResultHistory
-                    resultHistoryHashList={resultHistoryHashList}
-                  />
-                </Box>
-              </>
-            ) : (
-              <>
-                <Paper
-                  elevation={0}
-                  sx={{ display: { md: "block", xs: "none" } }}
-                >
-                  <div style={theme.mixins.toolbar} />
-                  <div style={theme.mixins.toolbar} />
-                </Paper>
-
-                <Typography component="h1" variant="h5">
-                  飲食店ランダム検索
-                </Typography>
-                <Box component="form" noValidate sx={{ mt: 5 }}>
-                  <TextInput
-                    referenceSitePosition={referenceSitePosition}
-                    setReferenceSitePosition={setReferenceSitePosition}
-                    theme={textFieldTheme}
-                  />
-                  <GenreCodeSelector
-                    genreCode={genreCode}
-                    setGenreCode={setGenreCode}
-                  />
-                  <BudgetCodeSelector
-                    bugetCode={bugetCode}
-                    setBugetCode={setBugetCode}
-                  />
-                  <RangeSelector range={range} setRange={setRange} />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={(e) => fetchRestraunt(e)}
-                    endIcon={<SearchIcon />}
-                    disabled={
-                      !referenceSitePosition.lat && !referenceSitePosition.lng
-                    }
-                  >
-                    検索
-                  </Button>
-                  <div style={creditStyle}>
-                    Powered by
-                    <a href="http://webservice.recruit.co.jp/">
-                      ホットペッパー Webサービス
-                    </a>
-                  </div>
-                </Box>
-              </>
-            )}
-          </Box>
+                </div>
+              </Box>
+            </>
+          )}
         </Box>
       </Grid>
     </Grid>
