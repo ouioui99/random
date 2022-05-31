@@ -9,11 +9,14 @@ import { AuthenticatedRoute } from "../router/AuthentivatedRoute";
 import { Auth } from "../router/Auth";
 import { UserProvider } from "../providers/UserProvider";
 
+import BasicTabs from "../pages/TestLoggedIn";
+
 function Router() {
   return (
     <BrowserRouter>
       <UserProvider>
         <Routes>
+          <Route path="/test" element={<BasicTabs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Home />} />

@@ -1,13 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { breakpoints } from "@mui/system";
 
 const containerStyle = {
   width: "100%",
   height: "92%",
 };
-
-const GoogleMapsApiKey = process.env.React_APP_GOOGLE_MAP_API;
 
 export const GoogleMapComponent = (props) => {
   const referenceSiteLat = Number(props.referenceSitePosition.lat);
@@ -82,32 +80,30 @@ export const GoogleMapComponent = (props) => {
 
   return (
     <>
-      <LoadScript googleMapsApiKey={GoogleMapsApiKey}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={centerPosition}
-          zoom={zoom}
-        >
-          {/* 検索基準地のmarker */}
-          {/* referenceSiteMarkerPositionsの一番新しいものだけをMarkerとして返却する */}
-          {referenceSiteMarkerPositions.map((marker, index) => {
-            return referenceSiteMarkerPositions.length == index + 1 ? (
-              <Marker key={index} position={marker} />
-            ) : (
-              <Fragment key={index}></Fragment>
-            );
-          })}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={centerPosition}
+        zoom={zoom}
+      >
+        {/* 検索基準地のmarker */}
+        {/* referenceSiteMarkerPositionsの一番新しいものだけをMarkerとして返却する */}
+        {referenceSiteMarkerPositions.map((marker, index) => {
+          return referenceSiteMarkerPositions.length == index + 1 ? (
+            <Marker key={index} position={marker} />
+          ) : (
+            <Fragment key={index}></Fragment>
+          );
+        })}
 
-          {/* 検索結果のmarker */}
-          {resultSitePositions.map((marker, index) => {
-            return resultSitePositions.length == index + 1 ? (
-              <Marker key={index} position={marker} />
-            ) : (
-              <Fragment key={index}></Fragment>
-            );
-          })}
-        </GoogleMap>
-      </LoadScript>
+        {/* 検索結果のmarker */}
+        {resultSitePositions.map((marker, index) => {
+          return resultSitePositions.length == index + 1 ? (
+            <Marker key={index} position={marker} />
+          ) : (
+            <Fragment key={index}></Fragment>
+          );
+        })}
+      </GoogleMap>
     </>
   );
 };
