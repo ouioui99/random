@@ -17,15 +17,20 @@ export const ResultHistory = (props) => {
 
   return (
     <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      sx={{ width: "100%", bgcolor: "primary.main" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
+        <ListItemText
+          primary="検索履歴"
+          primaryTypographyProps={{
+            color: "primary.contrastText",
+            fontWeight: "medium",
+            variant: "body2",
+            align: "center",
+          }}
+        />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -33,12 +38,20 @@ export const ResultHistory = (props) => {
           {props.resultHistoryHashList.map((historyHash, index) => {
             return (
               <ListItemButton
-                sx={{ pl: 4 }}
+                sx={{ pl: 4, backgroundColor: "#d5976a" }}
                 onClick={() => {
                   window.open(historyHash.url);
                 }}
               >
-                <ListItemText key={index} primary={historyHash.name} />
+                <ListItemText
+                  key={index}
+                  primary={historyHash.name}
+                  primaryTypographyProps={{
+                    color: "primary.contrastText",
+                    fontWeight: "medium",
+                    variant: "body2",
+                  }}
+                />
               </ListItemButton>
             );
           })}

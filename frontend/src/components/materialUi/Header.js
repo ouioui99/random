@@ -8,8 +8,6 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import theme from "../../theme/theme";
 
 import styles from "../../modules/Header.module.css";
 
@@ -27,10 +25,9 @@ export default function Header() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar position="fixed">
-        <Toolbar>
-          {/* <IconButton
+    <AppBar position="fixed">
+      <Toolbar>
+        {/* <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
@@ -39,65 +36,60 @@ export default function Header() {
                     >
                         <MenuIcon />
                     </IconButton> */}
-          <Button color="inherit" size="large" onClick={() => navigate("/")}>
+        <Button color="inherit" size="large" onClick={() => navigate("/")}>
+          <Typography variant="h6" component="div" className={styles.mainLogo}>
+            Random
+          </Typography>
+        </Button>
+        {isLoggedIn ? (
+          <>
             <Typography
-              variant="h6"
+              align="right"
+              variant="subtitle2"
               component="div"
-              className={styles.mainLogo}
+              sx={{ flexGrow: 10 }}
+              pr={1}
             >
-              Random
+              ようこそ、{sessionStorage.getItem("name")}さん
             </Typography>
-          </Button>
-          {isLoggedIn ? (
-            <>
-              <Typography
+            <Button
+              disableElevation
+              variant="contained"
+              size="large"
+              onClick={() => logout()}
+            >
+              Logout
+            </Button>
+          </>
+        ) : (
+          <Grid container>
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+            >
+              <Button
+                disableElevation
+                variant="contained"
                 align="right"
-                variant="subtitle2"
-                component="div"
-                sx={{ flexGrow: 10 }}
-                pr={1}
+                size="large"
+                onClick={() => navigate("/login")}
               >
-                ようこそ、{sessionStorage.getItem("name")}さん
-              </Typography>
+                Login
+              </Button>
               <Button
                 disableElevation
                 variant="contained"
                 size="large"
-                onClick={() => logout()}
+                onClick={() => navigate("/signup")}
               >
-                Logout
+                SignUp
               </Button>
-            </>
-          ) : (
-            <Grid container>
-              <Grid
-                container
-                direction="row"
-                justifyContent="flex-end"
-                alignItems="center"
-              >
-                <Button
-                  disableElevation
-                  variant="contained"
-                  align="right"
-                  size="large"
-                  onClick={() => navigate("/login")}
-                >
-                  Login
-                </Button>
-                <Button
-                  disableElevation
-                  variant="contained"
-                  size="large"
-                  onClick={() => navigate("/signup")}
-                >
-                  SignUp
-                </Button>
-              </Grid>
             </Grid>
-          )}
-        </Toolbar>
-      </AppBar>
-    </ThemeProvider>
+          </Grid>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 }
